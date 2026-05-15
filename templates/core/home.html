@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Home | ML Analytics{% endblock %}
+
+{% block content %}
+<div class="container py-5 min-vh-100 text-center">
+
+    <div class="glass-card p-5 mb-5" data-aos="fade-up">
+        <h1 class="display-3 fw-bold mb-4">
+            <i class="fas fa-brain text-primary me-3"></i>
+            ML Analytics Pro
+        </h1>
+
+        <p class="lead text-white-50 mb-5">
+            Upload data. Watch intelligence emerge.
+        </p>
+
+        <a href="#" class="btn btn-primary btn-lg me-3">Start Analysis</a>
+        <a href="#" class="btn btn-outline-light btn-lg">Watch Demo</a>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-4" data-aos="fade-up">
+            <div class="glass-card p-4">
+                <i class="fas fa-upload fa-3x text-success mb-3"></i>
+                <h4>Upload Dataset</h4>
+                <p class="text-white-50">CSV, Excel, JSON</p>
+            </div>
+        </div>
+
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
+            <div class="glass-card p-4">
+                <i class="fas fa-magic fa-3x text-warning mb-3"></i>
+                <h4>AutoML Engine</h4>
+                <p class="text-white-50">Training without friction</p>
+            </div>
+        </div>
+
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="glass-card p-4">
+                <i class="fas fa-chart-line fa-3x text-info mb-3"></i>
+                <h4>Insights</h4>
+                <p class="text-white-50">Visuals + Predictions</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

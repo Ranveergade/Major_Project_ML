@@ -11,6 +11,8 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ml_analytics.settings')
+#os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ml_analytics.settings.base')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ml_analytics.settings')
 
 application = get_wsgi_application()

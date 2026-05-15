@@ -1,13 +1,13 @@
 import os
 from pathlib import Path
-# from decouple import config
+from decouple import config
 import socket
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-your-secret-key-change-in-production')
-# DEBUG = config('DEBUG', default=False, cast=bool)
-# ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
+DEBUG = config('DEBUG', default=True, cast=bool)
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -86,3 +86,5 @@ X_FRAME_OPTIONS = 'DENY'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
