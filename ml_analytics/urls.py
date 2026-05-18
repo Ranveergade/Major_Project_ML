@@ -18,12 +18,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from ml_engine.views import file_seeing
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
     path('ml/', include('ml_engine.urls')),
     path('dashboard/', include('dashboard.urls')),
+    path("ml/", include("ml_engine.urls"))
 ]
 
 if settings.DEBUG:
