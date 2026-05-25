@@ -52,11 +52,3 @@ class AnalysisResult(models.Model):
     class Meta:
         verbose_name = "Analysis Result"
         verbose_name_plural = "Analysis Results"
-
-
-
-
-
-
-
-

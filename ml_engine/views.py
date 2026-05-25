@@ -1,125 +1,54 @@
-from django.shortcuts import render
-from django.http import HttpResponse  
-from django import forms
+# ml_engine/views.py
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 import pandas as pd
-from PyPDF2 import PdfReader  
-# Create your views here.                                                                                                           
-class FileUploadForm(forms.Form):
-    file = forms.FileField()
+import os
 
-def placeholder(request):
-    return HttpResponse("ML Engine - Coming Soon!")
-#file extension understanding
-def file_seeing(request):
-
-    result = None
-
-    if request.method == "POST":
-
-        form = FileUploadForm(request.POST, request.FILES)
-
-        if form.is_valid():
-
-            uploaded_file = request.FILES["file"]
-
-            filename = uploaded_file.name
-            extension = filename.split(".")[-1].lower()
-
+def upload_file(request):
+    """File upload page"""
+    if request.method == 'POST':
+        uploaded_file = request.FILES.get('file')
+        
+        if uploaded_file:
+            # Validate file type
+            file_ext = uploaded_file.name.split('.')[-1].lower()
+            allowed_ext = ['csv', 'xlsx', 'json', 'xls']
+            
+            if file_ext not in allowed_ext:
+                return JsonResponse({'error': 'Invalid file type. Allowed: CSV, Excel, JSON'}, status=400)
+            
+            # Save file
+            file_path = default_storage.save(uploaded_file.name, ContentFile(uploaded_file.read()))
+            
+            # Get file size
+            file_size = uploaded_file.size
+            
+            # Try to read and get info
             try:
-
-                # CSV FILE
-                if extension == "csv":
-
-                    df = pd.read_csv(uploaded_file)
-
-                    result = {
-                        "success": True,
-                        "type": "table",
-                        "filename": filename,
-                        "columns": list(df.columns),
-                        "rows": df.head(20).fillna("").values.tolist(),
-                        "total_rows": df.shape[0],
-                        "total_columns": df.shape[1],
-                        "file_type": extension,
-                    }
-                # EXCEL FILE
-                elif extension in ["xlsx", "xls"]:
-
-                    df = pd.read_excel(uploaded_file)
-
-                    result = {
-                        "success": True,
-                        "type": "table",
-                        "filename": filename,
-                        "columns": list(df.columns),
-                        "rows": df.head(20).fillna("").values.tolist(),
-                        "total_rows": df.shape[0],
-                        "total_columns": df.shape[1],
-                        "file_type": extension,
-                    }
-
-                # PDF FILE
-                elif extension == "pdf":
-
-                    reader = PdfReader(uploaded_file)
-
-                    text = ""
-
-                    for page in reader.pages:
-
-                        page_text = page.extract_text()
-
-                        if page_text:
-                            text += page_text + "\n"
-
-                    result = {
-                        "success": True,
-                        "type": "text",
-                        "filename": filename,
-                        "content": text[:5000],
-                        "total_characters": len(text),
-                        "file_type": extension,
-                    }
-
-                # TXT FILE
-                elif extension == "txt":
-
-                    text = uploaded_file.read().decode(
-                        "utf-8",
-                        errors="ignore"
-                    )
-
-                    result = {
-                        "success": True,
-                        "type": "text",
-                        "filename": filename,
-                        "content": text[:5000],
-                        "total_characters": len(text),
-                        "file_type": extension, 
-                    }
-
-                else:
-
-                    result = {
-                        "success": False,
-                        "error": "Unsupported File Type"
-                    }
-
+                full_path = os.path.join('media/', file_path)
+                if file_ext == 'csv':
+                    df = pd.read_csv(full_path)
+                elif file_ext in ['xlsx', 'xls']:
+                    df = pd.read_excel(full_path)
+                elif file_ext == 'json':
+                    df = pd.read_json(full_path)
+                
+                rows, cols = df.shape
+                columns = list(df.columns)
+                dtypes = df.dtypes.astype(str).to_dict()
+                
+                return JsonResponse({
+                    'success': True,
+                    'filename': uploaded_file.name,
+                    'file_size': file_size,
+                    'rows': rows,
+                    'columns': columns,
+                    'dtypes': dtypes
+                })
+                
             except Exception as e:
-
-                result = {
-                    "success": False,
-                    "error": str(e)
-                }
-
-    else:
-        form = FileUploadForm()
-
-    return render(
-        request,
-        "ml_engine/upload_file.html",
-        {
-            "form": form,
-            "result": result
-        }
-    )
+                return JsonResponse({'error': str(e)}, status=400)
+    
+    return render(request, 'ml_engine/upload.html')

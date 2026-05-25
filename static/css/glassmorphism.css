@@ -1,98 +1,81 @@
-/* Glassmorphism & Futuristic Design */
-:root {
-    --primary-bg: #0a0a0f;
-    --secondary-bg: #1a1a2e;
-    --accent: #16213e;
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    --success: #00d4aa;
-}
-
-body {
-    background: var(--primary-bg);
-    font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
-}
+/* Glassmorphism Base */
 
 .glass-card {
-    background: var(--glass-bg);
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 24px;
-    box-shadow:
-        0 25px 45px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.3);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .glass-card:hover {
-    transform: translateY(-10px);
-    box-shadow:
-        0 35px 68px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 35px 68px rgba(0, 0, 0, 0.15), 0 12px 24px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+
+/* Gradient Buttons */
+
 .gradient-btn {
-    background: var(--gradient-1);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border: none;
     border-radius: 16px;
-    padding: 14px 32px;
+    padding: 16px 32px;
     font-weight: 600;
     font-size: 1.1rem;
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+}
+
+.gradient-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.gradient-btn:hover::before {
+    left: 100%;
 }
 
 .gradient-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
 }
 
-.loader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--primary-bg);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    transition: opacity 0.5s ease;
+
+/* 3D Hover Cards */
+
+.card-3d {
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform-style: preserve-3d;
 }
 
-.loader-spinner {
-    width: 60px;
-    height: 60px;
+.card-3d:hover {
+    transform: rotateX(5deg) rotateY(5deg) translateZ(20px);
 }
 
-#particles-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    opacity: 0.3;
-}
 
 /* Custom Scrollbar */
+
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
 }
 
 ::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--gradient-1);
+    background: linear-gradient(135deg, #667eea, #764ba2);
     border-radius: 10px;
 }

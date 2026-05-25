@@ -1,10 +1,12 @@
 # dashboard/urls.py
 from django.urls import path
-from . import views
+from django.http import HttpResponse
+
+def placeholder(request):
+    return HttpResponse("Dashboard Coming Soon!")
 
 app_name = 'dashboard'
 
 urlpatterns = [
-    # Placeholder
-    path('', views.placeholder, name='dashboard'),
+    path('', placeholder, name='dashboard'),
 ]

@@ -1,50 +1,370 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block title %}Home | ML Analytics{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Analytics Pro - AI AutoML</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof AOS !== 'undefined') {
+                AOS.init({ duration: 700, once: true });
+            }
+        });
+    </script>
+    <style>
+        :root {
+            --bg-dark: #07091a;
+            --bg-alt: #10142d;
+            --glass: rgba(255, 255, 255, 0.09);
+            --glass-border: rgba(255, 255, 255, 0.16);
+            --text-muted: rgba(255, 255, 255, 0.72);
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #00d4aa;
+        }
 
-{% block content %}
-<div class="container py-5 min-vh-100 text-center">
+        * {
+            box-sizing: border-box;
+        }
 
-    <div class="glass-card p-5 mb-5" data-aos="fade-up">
-        <h1 class="display-3 fw-bold mb-4">
-            <i class="fas fa-brain text-primary me-3"></i>
-            ML Analytics Pro
-        </h1>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top left, rgba(102, 126, 234, 0.2), transparent 25%),
+                radial-gradient(circle at bottom right, rgba(0, 212, 170, 0.14), transparent 20%),
+                linear-gradient(135deg, var(--bg-dark), var(--bg-alt));
+        }
 
-        <p class="lead text-white-50 mb-5">
-            Upload data. Watch intelligence emerge.
-        </p>
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(0deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+            opacity: 0.35;
+            pointer-events: none;
+        }
 
-        <a href="#" class="btn btn-primary btn-lg me-3">Start Analysis</a>
-        <a href="#" class="btn btn-outline-light btn-lg">Watch Demo</a>
-    </div>
+        .navbar {
+            background: rgba(8, 10, 23, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(18px);
+        }
 
-    <div class="row g-4">
+        .navbar-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.35rem;
+        }
 
-        <div class="col-md-4" data-aos="fade-up">
-            <div class="glass-card p-4">
-                <i class="fas fa-upload fa-3x text-success mb-3"></i>
-                <h4>Upload Dataset</h4>
-                <p class="text-white-50">CSV, Excel, JSON</p>
+        .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            transition: color 0.25s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--accent) !important;
+        }
+
+        .hero-section {
+            min-height: calc(100vh - 88px);
+            display: grid;
+            place-items: center;
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+        }
+
+        .glass-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.32);
+        }
+
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            line-height: 1.02;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-title .highlight {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-copy {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 720px;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 999px;
+            padding: 14px 34px;
+            font-weight: 700;
+            box-shadow: 0 18px 40px rgba(102, 126, 234, 0.28);
+        }
+
+        .btn-outline-custom {
+            border: 1.8px solid rgba(255, 255, 255, 0.28);
+            color: white;
+            border-radius: 999px;
+            padding: 14px 34px;
+        }
+
+        .feature-card {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.06);
+            transition: transform 0.35s ease, border-color 0.35s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .feature-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 20px;
+            display: grid;
+            place-items: center;
+            background: rgba(102, 126, 234, 0.15);
+            margin-bottom: 1.4rem;
+        }
+
+        .section-heading {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 700;
+            margin-bottom: 0.7rem;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .step-badge {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: grid;
+            place-items: center;
+            color: white;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            padding: 2.5rem 0;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding-top: 7rem;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+            }
+
+            .hero-actions .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark py-3">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-brain text-primary me-2"></i>ML Analytics Pro
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#workflow">Workflow</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <a href="/ml/" class="btn btn-primary-custom ms-lg-3 mt-3 mt-lg-0">
+                    <i class="fas fa-upload me-2"></i>Upload Dataset
+                </a>
             </div>
         </div>
+    </nav>
 
-        <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
-            <div class="glass-card p-4">
-                <i class="fas fa-magic fa-3x text-warning mb-3"></i>
-                <h4>AutoML Engine</h4>
-                <p class="text-white-50">Training without friction</p>
+    <main class="hero-section" id="home">
+        <div class="container">
+            <div class="row align-items-center gy-5">
+                <div class="col-lg-6 text-center text-lg-start" data-aos="fade-right">
+                    <p class="text-uppercase text-primary mb-3 fw-semibold">AI-driven AutoML platform</p>
+                    <h1 class="hero-title mb-4">
+                        Turn your data into <span class="highlight">actionable intelligence</span>
+                    </h1>
+                    <p class="hero-copy mb-4">
+                        Upload any dataset, let the system detect the problem type, build models automatically, and view
+                        insights in beautifully generated reports.
+                    </p>
+                    <div class="d-flex hero-actions flex-wrap gap-3 justify-content-center justify-content-lg-start">
+                        <a href="/ml/" class="btn btn-primary-custom">
+                            <i class="fas fa-cloud-upload-alt me-2"></i>Start Analysis
+                        </a>
+                        <a href="/dashboard/" class="btn btn-outline-custom text-white">
+                            <i class="fas fa-chart-line me-2"></i>View Dashboard
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="glass-card p-4 p-md-5">
+                        <div class="mb-4 text-center">
+                            <span class="badge rounded-pill bg-primary px-4 py-2">AI AUTO ML</span>
+                        </div>
+                        <h2 class="h3 text-center mb-3">Smart model selection, no code necessary.</h2>
+                        <p class="text-center text-muted mb-4">From preprocessing to model comparison, our intelligent engine helps you quickly understand what matters.</p>
+                        <div class="row gy-3">
+                            <div class="col-4 text-center">
+                                <div class="text-primary fs-2 fw-bold">10+</div>
+                                <div class="text-muted">Algorithms</div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div class="text-primary fs-2 fw-bold">Auto</div>
+                                <div class="text-muted">Problem detection</div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div class="text-primary fs-2 fw-bold">Fast</div>
+                                <div class="text-muted">Insights</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+    </main>
 
-        <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
-            <div class="glass-card p-4">
-                <i class="fas fa-chart-line fa-3x text-info mb-3"></i>
-                <h4>Insights</h4>
-                <p class="text-white-50">Visuals + Predictions</p>
+    <section class="py-5" id="features">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-heading">Built for modern data teams</h2>
+                <p class="section-subtitle">A complete AutoML experience with data preprocessing, model training, and visualization all in one place.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card h-100 text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-database fa-lg text-primary"></i>
+                        </div>
+                        <h5>Data Intelligence</h5>
+                        <p class="text-white-50">Smart data profiling, cleaning, and feature engineering from the first upload.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card h-100 text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-robot fa-lg text-warning"></i>
+                        </div>
+                        <h5>Automated Modeling</h5>
+                        <p class="text-white-50">The platform selects the right model family and optimizes it for your dataset.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card h-100 text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-pie fa-lg text-info"></i>
+                        </div>
+                        <h5>Interactive Reports</h5>
+                        <p class="text-white-50">Review accuracy, feature importance, and prediction insights in a polished dashboard.</p>
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
 
-    </div>
-</div>
-{% endblock %}
+    <section class="py-5 bg-dark bg-opacity-10" id="workflow">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-heading">How it works</h2>
+                <p class="section-subtitle">Three simple stages to go from raw data to production-ready insights.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="glass-card p-4 h-100 text-center">
+                        <div class="step-badge mx-auto mb-3">1</div>
+                        <h5>Upload</h5>
+                        <p class="text-white-50">Send your dataset and let the engine inspect its structure automatically.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="glass-card p-4 h-100 text-center">
+                        <div class="step-badge mx-auto mb-3">2</div>
+                        <h5>Analyze</h5>
+                        <p class="text-white-50">Watch as preprocessing, validation, and model selection happen behind the scenes.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="glass-card p-4 h-100 text-center">
+                        <div class="step-badge mx-auto mb-3">3</div>
+                        <h5>Review</h5>
+                        <p class="text-white-50">Use easy-to-read visualizations and model summaries to decide your next move.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5" id="contact">
+        <div class="container">
+            <div class="glass-card p-5 text-center">
+                <h2 class="section-heading">Ready to move faster?</h2>
+                <p class="section-subtitle">Upload your dataset now and let the ML engine do the rest.</p>
+                <a href="/ml/" class="btn btn-primary-custom btn-lg mt-4">
+                    <i class="fas fa-rocket me-2"></i>Launch AutoML
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center text-white-50">
+        <div class="container">
+            <p class="mb-0">© 2026 ML Analytics Pro · Built for fast, beautiful AI workflows.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

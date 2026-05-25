@@ -1,8 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-# Create your views here.
 # dashboard/views.py
-
+from django.http import HttpResponse
 
 def placeholder(request):
-    return HttpResponse("Dashboard - Coming Soon!")
+    return HttpResponse("Dashboard Coming Soon!")
