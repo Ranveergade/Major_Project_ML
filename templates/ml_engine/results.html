@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Results - ML Analytics Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+         :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --cyan: #00f0ff;
+            --accent: #00d4aa;
+            --dark: #0a0a0f;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark) 0%, #1a1a2e 50%, #0f0f23 100%);
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            color: white;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            color: var(--cyan);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .stat-card p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+        
+        .viz-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .viz-card h5 {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .viz-card img {
+            width: 100%;
+            border-radius: 12px;
+        }
+        
+        .model-badge {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        
+        .gradient-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border: none;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .nav-main {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            background: rgba(3, 3, 8, 0.85);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 15px 0;
+        }
+        
+        .nav-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        body {
+            padding-top: 80px;
+        }
+        
+        .table {
+            color: white !important;
+        }
+        
+        .table th {
+            color: var(--cyan) !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+        }
+        
+        .table td {
+            border-color: rgba(255, 255, 255, 0.1) !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="nav-main navbar navbar-expand-lg">
+        <div class="container">
+            <a href="/" class="navbar-brand nav-brand">
+                <i class="fas fa-brain text-primary me-2"></i>ML Analytics Pro
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link text-white" href="/">Home</a>
+                <a class="nav-link text-white" href="/ml/">Upload</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <!-- Header -->
+        <div class="text-center mb-5">
+            <h1><i class="fas fa-chart-line me-3"></i>ML Analysis Results</h1>
+            <p style="color: rgba(255,255,255,0.6);">Your AutoML analysis is complete!</p>
+        </div>
+
+        {% if results %}
+        <!-- Stats -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h3>{{ results.best_score }}</h3>
+                    <p>Best Score</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h3>{{ results.best_model }}</h3>
+                    <p>Best Model</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h3>{{ results.problem_type|title }}</h3>
+                    <p>Problem Type</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h3>{{ results.rows }}</h3>
+                    <p>Dataset Rows</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visualizations -->
+        <div class="glass-card">
+            <h3 class="mb-4"><i class="fas fa-chart-pie me-2"></i>Visualizations</h3>
+
+            {% if results.visualizations.model_comparison %}
+            <div class="viz-card">
+                <h5><i class="fas fa-chart-bar me-2"></i>Model Comparison</h5>
+                <img src="data:image/png;base64,{{ results.visualizations.model_comparison }}" alt="Model Comparison">
+            </div>
+            {% endif %} {% if results.visualizations.confusion_matrix %}
+            <div class="viz-card">
+                <h5><i class="fas fa-th me-2"></i>Confusion Matrix</h5>
+                <img src="data:image/png;base64,{{ results.visualizations.confusion_matrix }}" alt="Confusion Matrix">
+            </div>
+            {% endif %} {% if results.visualizations.feature_importance %}
+            <div class="viz-card">
+                <h5><i class="fas fa-list me-2"></i>Feature Importance</h5>
+                <img src="data:image/png;base64,{{ results.visualizations.feature_importance }}" alt="Feature Importance">
+            </div>
+            {% endif %} {% if results.visualizations.classification_report %}
+            <div class="viz-card">
+                <h5><i class="fas fa-clipboard me-2"></i>Classification Report</h5>
+                <img src="data:image/png;base64,{{ results.visualizations.classification_report }}" alt="Classification Report">
+            </div>
+            {% endif %} {% if results.visualizations.correlation_heatmap %}
+            <div class="viz-card">
+                <h5><i class="fas fa-fire me-2"></i>Correlation Heatmap</h5>
+                <img src="data:image/png;base64,{{ results.visualizations.correlation_heatmap }}" alt="Correlation Heatmap">
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- All Models -->
+        <div class="glass-card">
+            <h3 class="mb-4"><i class="fas fa-robot me-2"></i>All Models Tested</h3>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>Train Score</th>
+                            <th>Test Score</th>
+                            {% if results.problem_type == 'regression' %}
+                            <th>RMSE</th>
+                            <th>MAE</th>
+                            {% else %}
+                            <th>Precision</th>
+                            <th>Recall</th>
+                            <th>F1-Score</th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for model_name, model_data in results.all_models.items %}
+                        <tr>
+                            <td>
+                                {% if model_name == results.best_model %}
+                                <span class="model-badge">
+                                    <i class="fas fa-check-circle me-1"></i>{{ model_name }}
+                                </span> {% else %} {{ model_name }} {% endif %}
+                            </td>
+                            {% if results.problem_type == 'regression' %}
+                            <td>{{ model_data.train_r2|default:"N/A" }}</td>
+                            <td>{{ model_data.test_r2|default:"N/A" }}</td>
+                            <td>{{ model_data.test_rmse|default:"N/A" }}</td>
+                            <td>{{ model_data.test_mae|default:"N/A" }}</td>
+                            {% else %}
+                            <td>{{ model_data.train_accuracy|default:"N/A" }}</td>
+                            <td>{{ model_data.test_accuracy|default:"N/A" }}</td>
+                            <td>{{ model_data.classification_report.accuracy.precision|default:"N/A"|floatformat:3 }}</td>
+                            <td>{{ model_data.classification_report.accuracy.recall|default:"N/A"|floatformat:3 }}</td>
+                            <td>{{ model_data.classification_report.accuracy.f1-score|default:"N/A"|floatformat:3 }}</td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="text-center">
+            <a href="/ml/" class="gradient-btn">
+                <i class="fas fa-upload me-2"></i>Upload Another Dataset
+            </a>
+            <a href="/" class="btn btn-outline-light ms-3">
+                <i class="fas fa-home me-2"></i>Home
+            </a>
+        </div>
+
+        {% else %}
+        <div class="glass-card text-center">
+            <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
+            <h3>No Results Found</h3>
+            <p>Please run an analysis first.</p>
+            <a href="/ml/" class="gradient-btn mt-3">Go to Upload</a>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>
