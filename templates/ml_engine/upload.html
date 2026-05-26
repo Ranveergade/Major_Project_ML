@@ -7,9 +7,17 @@
     <title>Upload Dataset - ML Analytics Pro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+         :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --cyan: #00f0ff;
+            --accent: #00d4aa;
+            --dark: #0a0a0f;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -17,9 +25,10 @@
         }
         
         body {
-            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f0f23 100%);
+            background: linear-gradient(135deg, var(--dark) 0%, #1a1a2e 50%, #0f0f23 100%);
             min-height: 100vh;
             font-family: 'Inter', sans-serif;
+            color: white;
         }
         
         .glass-card {
@@ -28,10 +37,11 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 24px;
             box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
+            padding: 40px;
         }
         
         .gradient-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             border: none;
             padding: 16px 36px;
             border-radius: 14px;
@@ -39,10 +49,23 @@
             font-size: 1.1rem;
             color: white;
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .gradient-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.6);
+        }
+        
+        .gradient-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
         
         .drop-zone {
-            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border: 2px dashed rgba(255, 255, 255, 0.25);
             border-radius: 20px;
             padding: 60px 20px;
             text-align: center;
@@ -53,109 +76,229 @@
         
         .drop-zone:hover,
         .drop-zone.dragover {
-            border-color: #667eea;
+            border-color: var(--primary);
             background: rgba(102, 126, 234, 0.1);
         }
         
-        .drop-zone i {
-            font-size: 4rem;
-            color: rgba(255, 255, 255, 0.5);
+        .file-info-box {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(0, 212, 170, 0.1) 100%);
+            border: 1px solid rgba(0, 212, 170, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
         }
         
-        .text-white-50 {
+        .file-info-box h4 {
+            color: #00f0ff;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+        
+        .stat-box {
+            text-align: center;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-box h5 {
+            color: var(--accent);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .stat-box p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            margin: 5px 0 0 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .form-label {
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 12px;
+        }
+        
+        .form-select {
+            background: rgba(0, 0, 0, 0.4) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: white !important;
+        }
+        
+        .form-select option {
+            background: #1a1a2e;
+            color: white;
+        }
+        
+        .nav-main {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            background: rgba(3, 3, 8, 0.85);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 15px 0;
+        }
+        
+        .nav-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        .nav-link {
             color: rgba(255, 255, 255, 0.7) !important;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 8px 14px !important;
+            border-radius: 10px;
         }
         
-        .file-info-card {
+        .nav-link:hover {
+            color: #fff !important;
             background: rgba(102, 126, 234, 0.2);
-            border-radius: 16px;
-            padding: 20px;
-            margin-top: 20px;
         }
         
-        .navbar-custom {
-            background: rgba(10, 10, 15, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .loading-spinner.show {
+            display: block;
+        }
+        
+        body {
+            padding-top: 80px;
         }
     </style>
 </head>
 
-<body class="text-white">
-    <nav class="navbar navbar-expand-lg navbar-custom">
+<body>
+    <!-- Navigation -->
+    <nav class="nav-main navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand fw-bold text-white" href="/">
+            <a href="/" class="navbar-brand nav-brand">
                 <i class="fas fa-brain text-primary me-2"></i>ML Analytics Pro
             </a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link text-white" href="/">Home</a>
-                <a class="nav-link text-white" href="/ml/">Upload</a>
-                <a class="nav-link text-white" href="/dashboard/">Dashboard</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navCollapse">
+                <i class="fas fa-bars text-white"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navCollapse">
+                <ul class="navbar-nav ms-auto gap-2">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/ml/">Upload</a></li>
+                </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container py-5 mt-5">
+    <div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <div class="glass-card p-5">
-                    <h2 class="text-center mb-4">
+                <div class="glass-card">
+                    <h2 class="text-center mb-2">
                         <i class="fas fa-cloud-upload-alt me-2"></i>Upload Dataset
                     </h2>
-                    <p class="text-center text-white-50 mb-4">
+                    <p class="text-center mb-4" style="color: rgba(255,255,255,0.6);">
                         Upload your dataset to start Automatic ML Analysis
                     </p>
 
+                    <!-- Drop Zone -->
                     <div class="drop-zone" id="dropZone">
-                        <i class="fas fa-cloud-upload-alt mb-3"></i>
+                        <i class="fas fa-cloud-upload-alt mb-3" style="font-size: 4rem; color: rgba(255,255,255,0.4);"></i>
                         <h4>Drag & Drop your file here</h4>
-                        <p class="text-white-50 mb-3">or click to browse</p>
-                        <p class="text-white-50 small">
+                        <p style="color: rgba(255,255,255,0.5);">or click to browse</p>
+                        <p style="color: rgba(255,255,255,0.5);">
                             Supported: <strong>CSV, Excel (.xlsx), JSON</strong>
                         </p>
                         <input type="file" id="fileInput" accept=".csv,.xlsx,.json,.xls" hidden>
                     </div>
 
-                    <div id="fileInfo" class="file-info-card d-none">
-                        <h5><i class="fas fa-file me-2"></i><span id="fileName"></span></h5>
-                        <div class="row mt-3">
-                            <div class="col-4">
-                                <p class="mb-1 small text-white-50">Rows</p>
-                                <h4 id="rowCount">-</h4>
-                            </div>
-                            <div class="col-4">
-                                <p class="mb-1 small text-white-50">Columns</p>
-                                <h4 id="colCount">-</h4>
-                            </div>
-                            <div class="col-4">
-                                <p class="mb-1 small text-white-50">Size</p>
-                                <h4 id="fileSize">-</h4>
+                    <!-- File Info -->
+                    <div id="fileInfo" class="d-none">
+                        <div class="file-info-box">
+                            <h4><i class="fas fa-check-circle me-2"></i><span id="fileName"></span></h4>
+
+                            <div class="row g-3 mt-2">
+                                <div class="col-4">
+                                    <div class="stat-box">
+                                        <h5 id="rowCount">-</h5>
+                                        <p>Rows</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="stat-box">
+                                        <h5 id="colCount">-</h5>
+                                        <p>Columns</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="stat-box">
+                                        <h5 id="fileSize">-</h5>
+                                        <p>Size</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="mt-3">
-                            <p class="mb-1 small text-white-50">Columns:</p>
-                            <p id="columnsList" class="small"></p>
+
+                        <!-- Target Selection -->
+                        <div class="mt-4">
+                            <label class="form-label"><i class="fas fa-bullseye me-2"></i>Select Target (What you want to predict):</label>
+                            <select class="form-select" id="targetColumn">
+                                <option value="">Choose target column...</option>
+                            </select>
                         </div>
+
+                        <!-- Analyze Button -->
+                        <button id="analyzeBtn" class="gradient-btn mt-4" disabled>
+                            <i class="fas fa-rocket me-2"></i>Start ML Analysis
+                        </button>
                     </div>
 
-                    <div id="errorMsg" class="alert alert-danger d-none mt-3"></div>
+                    <!-- Error -->
+                    <div id="errorMsg" class="alert alert-danger mt-3 d-none" style="border-radius: 12px;"></div>
 
-                    <button id="analyzeBtn" class="btn gradient-btn btn-lg w-100 mt-4" disabled>
-                        <i class="fas fa-rocket me-2"></i>Start ML Analysis
-                    </button>
+                    <!-- Loading -->
+                    <div class="loading-spinner" id="loading">
+                        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+                        <p class="mt-3">Running ML Analysis...</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    {% csrf_token %}
     <script>
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
         const fileInfo = document.getElementById('fileInfo');
         const analyzeBtn = document.getElementById('analyzeBtn');
         const errorMsg = document.getElementById('errorMsg');
+        const loading = document.getElementById('loading');
+        const targetColumn = document.getElementById('targetColumn');
 
         let selectedFile = null;
+
+        function getCSRF() {
+            return document.querySelector('[name=csrfmiddlewaretoken]').value;
+        }
 
         dropZone.addEventListener('click', () => fileInput.click());
         fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
@@ -165,9 +308,7 @@
             dropZone.classList.add('dragover');
         });
 
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('dragover');
-        });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
 
         dropZone.addEventListener('drop', (e) => {
             e.preventDefault();
@@ -177,27 +318,22 @@
 
         async function handleFile(file) {
             if (!file) return;
-
             selectedFile = file;
             errorMsg.classList.add('d-none');
 
             const ext = file.name.split('.').pop().toLowerCase();
-            const allowedExts = ['csv', 'xlsx', 'json', 'xls'];
-
-            if (!allowedExts.includes(ext)) {
+            if (!['csv', 'xlsx', 'json', 'xls'].includes(ext)) {
                 errorMsg.classList.remove('d-none');
-                errorMsg.textContent = 'Invalid file type! Please upload CSV, Excel, or JSON file.';
+                errorMsg.textContent = 'Invalid file type!';
                 return;
             }
 
-            // Show file info
             document.getElementById('fileName').textContent = file.name;
-            document.getElementById('fileSize').textContent = (file.size / 1024).toFixed(2) + ' KB';
+            document.getElementById('fileSize').textContent = (file.size / 1024).toFixed(1) + ' KB';
 
-            // Send to server to get details
             const formData = new FormData();
             formData.append('file', file);
-            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+            formData.append('csrfmiddlewaretoken', getCSRF());
 
             try {
                 const response = await fetch('/ml/', {
@@ -210,23 +346,107 @@
                 if (data.success) {
                     document.getElementById('rowCount').textContent = data.rows;
                     document.getElementById('colCount').textContent = data.columns.length;
-                    document.getElementById('columnsList').textContent = data.columns.join(', ');
+
+                    targetColumn.innerHTML = '<option value="">Choose target column...</option>';
+                    data.columns.forEach(col => {
+                        const option = document.createElement('option');
+                        option.value = col;
+                        option.textContent = col;
+                        targetColumn.appendChild(option);
+                    });
+
                     fileInfo.classList.remove('d-none');
-                    analyzeBtn.disabled = false;
                 } else {
                     errorMsg.classList.remove('d-none');
-                    errorMsg.textContent = data.error || 'Error reading file';
+                    errorMsg.textContent = data.error || 'Error uploading file';
                 }
             } catch (err) {
                 errorMsg.classList.remove('d-none');
-                errorMsg.textContent = 'Error uploading file. Please try again.';
+                errorMsg.textContent = 'Error: ' + err.message;
             }
         }
 
-        analyzeBtn.addEventListener('click', () => {
-            if (selectedFile) {
-                alert('ML Analysis would start here! (Backend coming soon)');
+        targetColumn.addEventListener('change', (e) => {
+            analyzeBtn.disabled = !e.target.value;
+        });
+
+        analyzeBtn.addEventListener('click', async() => {
+            if (!selectedFile || !targetColumn.value) return;
+
+            analyzeBtn.disabled = true;
+            analyzeBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Analyzing...';
+            loading.classList.add('show');
+
+            try {
+                const formData = new FormData();
+                formData.append('file', selectedFile);
+                formData.append('target_column', targetColumn.value);
+                formData.append('csrfmiddlewaretoken', getCSRF());
+
+                const response = await fetch('/ml/analyze/', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    const scoreKey = data.problem_type === 'regression' ? 'test_r2' : 'test_accuracy';
+
+                    let resultsHtml = `
+                        <div class="file-info-box mt-4" style="border-color: rgba(0,240,255,0.3);">
+                            <h4 style="color: #00f0ff;"><i class="fas fa-check-circle me-2"></i>Analysis Complete!</h4>
+                            <div class="row g-3 mt-3">
+                                <div class="col-4">
+                                    <div class="stat-box">
+                                        <h5 style="color: #00f0ff;">${data.problem_type}</h5>
+                                        <p>Problem Type</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="stat-box">
+                                        <h5 style="color: #00f0ff;">${data.best_model}</h5>
+                                        <p>Best Model</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="stat-box">
+                                        <h5 style="color: #00f0ff;">${data.best_score}</h5>
+                                        <p>Best Score</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h5 style="color: white;"><i class="fas fa-list me-2"></i>All Models:</h5>
+                            <table class="table mt-3" style="color: white; border-color: rgba(255,255,255,0.2);">
+                                <thead><tr style="color: #00d4aa;"><th>Model</th><th>Score</th></tr></thead>
+                                <tbody>
+                    `;
+
+                    for (const [modelName, modelData] of Object.entries(data.all_results)) {
+                        const score = modelData[scoreKey] || 'N/A';
+                        resultsHtml += `<tr><td>${modelName}</td><td>${score}</td></tr>`;
+                    }
+
+                    resultsHtml += '</tbody></table></div>';
+                    fileInfo.insertAdjacentHTML('afterend', resultsHtml);
+                    analyzeBtn.classList.add('d-none');
+                    targetColumn.disabled = true;
+                } else {
+                    errorMsg.classList.remove('d-none');
+                    errorMsg.textContent = data.error || 'Error running analysis';
+                    analyzeBtn.disabled = false;
+                    analyzeBtn.innerHTML = '<i class="fas fa-rocket me-2"></i>Start ML Analysis';
+                }
+            } catch (err) {
+                errorMsg.classList.remove('d-none');
+                errorMsg.textContent = 'Error: ' + err.message;
+                analyzeBtn.disabled = false;
+                analyzeBtn.innerHTML = '<i class="fas fa-rocket me-2"></i>Start ML Analysis';
             }
+
+            loading.classList.remove('show');
         });
     </script>
 </body>

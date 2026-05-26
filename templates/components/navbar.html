@@ -1,0 +1,84 @@
+<style>
+    .nav-main {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        background: rgba(3, 3, 8, 0.7);
+        backdrop-filter: blur(24px) saturate(1.2);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    /* push content down */
+    
+    body {
+        padding-top: 80px;
+    }
+    /* brand */
+    
+    .nav-brand {
+        font-weight: 700;
+        font-size: 1.4rem;
+        color: #fff;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .brand-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #00f0ff, #ff2a6d);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    /* links */
+    
+    .nav-link {
+        color: rgba(255, 255, 255, 0.7) !important;
+        font-size: 0.9rem;
+        padding: 8px 14px !important;
+        border-radius: 10px;
+        transition: 0.3s;
+    }
+    
+    .nav-link:hover {
+        color: #fff !important;
+        background: rgba(0, 240, 255, 0.08);
+    }
+</style>
+<nav class="nav-main navbar navbar-expand-lg">
+    <div class="container">
+
+        <!-- Logo -->
+        <a href="/" class="navbar-brand nav-brand">
+            <div class="brand-icon">
+                <i class="fas fa-brain"></i>
+            </div>
+            ML Analytics Pro
+        </a>
+
+        <!-- Toggle -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navCollapse">
+            <i class="fas fa-bars text-white"></i>
+        </button>
+
+        <!-- Menu -->
+        <div class="collapse navbar-collapse" id="navCollapse">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
+
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/ml/">Upload</a></li>
+                <li class="nav-item"><a class="nav-link" href="/dashboard/">Dashboard</a></li>
+
+            </ul>
+        </div>
+
+    </div>
+</nav>
