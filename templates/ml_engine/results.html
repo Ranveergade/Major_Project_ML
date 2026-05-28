@@ -261,7 +261,7 @@
                             <td>{{ model_data.test_accuracy|default:"N/A" }}</td>
                             <td>{{ model_data.classification_report.accuracy.precision|default:"N/A"|floatformat:3 }}</td>
                             <td>{{ model_data.classification_report.accuracy.recall|default:"N/A"|floatformat:3 }}</td>
-                            <td>{{ model_data.classification_report.accuracy.f1-score|default:"N/A"|floatformat:3 }}</td>
+                            <td>{{ model_data.classification_report.accuracy.f1_score|default:"N/A"|floatformat:3 }}</td>
                             {% endif %}
                         </tr>
                         {% endfor %}

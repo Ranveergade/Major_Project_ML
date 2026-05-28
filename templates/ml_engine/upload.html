@@ -1011,7 +1011,6 @@
             }
         }
     </style>
-    <base target="_blank">
 </head>
 
 <body>
@@ -1064,91 +1063,130 @@
                 </div>
 
                 <div class="glass-card p-4 p-md-5">
-                    <div class="drop-zone" id="dropZone">
-                        <div class="drop-zone-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-                        <h4>Drag & Drop your file here</h4>
-                        <p class="dz-sub">or click anywhere in this area to browse</p>
-                        <div class="dz-formats">
-                            <span class="format-badge">.CSV</span>
-                            <span class="format-badge">.XLSX</span>
-                            <span class="format-badge">.JSON</span>
-                            <span class="format-badge">.XLS</span>
-                        </div>
-                        <input type="file" id="fileInput" accept=".csv,.xlsx,.json,.xls" hidden>
-                    </div>
+                    <form method="POST" enctype="multipart/form-data" action="/ml/" id="uploadForm">
+                        {% csrf_token %}
 
-                    <div id="fileInfo" class="d-none">
+                        <div class="drop-zone" id="dropZone">
+                            <div class="drop-zone-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                            <h4>Drag & Drop your file here</h4>
+                            <p class="dz-sub">or click anywhere in this area to browse</p>
+                            <div class="dz-formats">
+                                <span class="format-badge">.CSV</span>
+                                <span class="format-badge">.XLSX</span>
+                                <span class="format-badge">.JSON</span>
+                                <span class="format-badge">.XLS</span>
+                            </div>
+                            <input type="file" id="fileInput" name="file" accept=".csv,.xlsx,.json,.xls" hidden required>
+                        </div>
+
+                        <div class="file-info-card d-none" id="selectedFileCard">
+                            <div class="fi-header">
+                                <div class="fi-icon"><i class="fas fa-file-upload"></i></div>
+                                <div>
+                                    <div class="fi-name" id="selectedFileName">No file selected</div>
+                                    <div style="color:var(--text-dim);font-size:0.85rem;margin-top:4px;" id="selectedFileSize">Choose a dataset to continue</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-glow btn-lg mt-4" id="uploadBtn">
+                            <i class="fas fa-cloud-upload-alt"></i> Upload Dataset
+                        </button>
+                    </form>
+
+                    {% if error %}
+                    <div class="error-alert">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div class="error-text">{{ error }}</div>
+                    </div>
+                    {% endif %}
+
+                    {% if success %}
+                    <div id="fileInfo">
                         <div class="file-info-card">
                             <div class="fi-header">
-                                <div class="fi-icon"><i class="fas fa-file-csv"></i></div>
-                                <div class="fi-name" id="fileName">dataset.csv</div>
+                                <div class="fi-icon"><i class="fas fa-check-circle"></i></div>
+                                <div>
+                                    <div class="fi-name">{{ filename }}</div>
+                                    <div style="color:var(--emerald);font-size:0.85rem;margin-top:4px;">File uploaded successfully</div>
+                                </div>
                             </div>
                             <div class="fi-meta">
                                 <div class="fi-meta-item">
                                     <div class="fi-label">Rows</div>
-                                    <div class="fi-value" id="rowCount">-</div>
+                                    <div class="fi-value">{{ rows }}</div>
                                 </div>
                                 <div class="fi-meta-item">
                                     <div class="fi-label">Columns</div>
-                                    <div class="fi-value" id="colCount">-</div>
+                                    <div class="fi-value">{{ cols }}</div>
                                 </div>
                                 <div class="fi-meta-item">
-                                    <div class="fi-label">Size</div>
-                                    <div class="fi-value" id="fileSize" style="font-size:1.2rem;">-</div>
+                                    <div class="fi-label">Status</div>
+                                    <div class="fi-value" style="font-size:1.2rem;">Ready</div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="columns-preview">
                             <div class="cp-label"><i class="fas fa-columns"></i> Detected Columns</div>
-                            <div class="columns-grid" id="columnsGrid"></div>
-                        </div>
-
-                        <div class="problem-type-section d-none" id="problemTypeSection">
-                            <div class="pt-header">
-                                <div class="pt-icon" id="ptIcon"><i class="fas fa-brain"></i></div>
-                                <div>
-                                    <div class="pt-title" id="ptTitle">Analyzing...</div>
-                                    <div class="pt-subtitle" id="ptSubtitle">Detecting problem type from your data</div>
-                                </div>
-                            </div>
-                            <div class="pt-body">
-                                <div class="pt-description" id="ptDescription"></div>
-                                <div class="pt-samples" id="ptSamples"></div>
-                                <div class="pt-confidence">
-                                    <div class="pt-confidence-bar">
-                                        <div class="pt-confidence-fill" id="ptConfidenceFill" style="width: 0%"></div>
-                                    </div>
-                                    <div class="pt-confidence-text" id="ptConfidenceText">0%</div>
-                                </div>
+                            <div class="columns-grid">
+                                {% for col in columns %}
+                                <span class="column-chip">{{ col }}</span>
+                                {% endfor %}
                             </div>
                         </div>
 
-                        <div class="target-section">
-                            <label><i class="fas fa-bullseye"></i> Select Target Column</label>
-                            <select class="form-select target-select" id="targetColumn">
-                                <option value="">Choose the column you want to predict...</option>
-                            </select>
+                        <form method="POST" action="/ml/analyze/" id="analyzeForm">
+                            {% csrf_token %}
+                            <div class="target-section">
+                                <label><i class="fas fa-bullseye"></i> Select Target Column</label>
+                                <select class="form-select target-select" name="target_column" id="targetColumn" required>
+                                    <option value="">Choose the column you want to predict...</option>
+                                    {% for col in columns %}
+                                    <option value="{{ col }}">{{ col }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <button class="btn-glow btn-lg mt-4" type="submit" id="analyzeBtn">
+                                <i class="fas fa-rocket"></i> Start ML Analysis
+                            </button>
+                        </form>
+                    </div>
+                    {% endif %}
+
+                    {% if analysis_success %}
+                    <div class="results-card">
+                        <div class="rc-header">
+                            <div class="rc-icon"><i class="fas fa-check-circle"></i></div>
+                            <div>
+                                <div class="rc-title">Analysis Complete</div>
+                                <div style="margin-top:6px;">
+                                    <span class="rc-badge"><i class="fas fa-tag"></i>{{ problem_type }}</span>
+                                    <span class="rc-badge" style="margin-left:8px;background:rgba(0,255,157,0.08);border-color:rgba(0,255,157,0.15);color:var(--emerald);"><i class="fas fa-trophy"></i>{{ best_model }}</span>
+                                </div>
+                            </div>
                         </div>
 
-                        <button id="analyzeBtn" class="btn-glow btn-lg mt-4" disabled>
-                            <i class="fas fa-rocket"></i>Start ML Analysis
-                        </button>
+                        <table class="results-table">
+                            <thead>
+                                <tr>
+                                    <th>Model</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for model_name, score in model_scores.items %}
+                                <tr class="{% if model_name == best_model %}best-row{% endif %}">
+                                    <td>{{ model_name }}</td>
+                                    <td><span class="score-badge">{{ score }}</span></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
-
-                    <div id="errorMsg" class="error-alert d-none">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <div class="error-text" id="errorText"></div>
-                    </div>
-
-                    <div id="resultsContainer"></div>
+                    {% endif %}
                 </div>
-            </div>
-        </div>
-    </div>
-
-    {% csrf_token %}
-
     <script>
         // Nebula Canvas
         const nebCanvas = document.getElementById('nebula-canvas');
@@ -1161,6 +1199,7 @@
         }
         resizeNeb();
         window.addEventListener('resize', resizeNeb);
+
         class NebParticle {
             constructor() {
                 this.x = Math.random() * nebCanvas.width;
@@ -1202,8 +1241,8 @@
             });
             nebParticles.forEach((a, i) => {
                 nebParticles.slice(i + 1).forEach(b => {
-                    const dx = a.x - b.x,
-                        dy = a.y - b.y;
+                    const dx = a.x - b.x;
+                    const dy = a.y - b.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
                     if (dist < 150) {
                         nebCtx.strokeStyle = `hsla(${(a.hue + b.hue) / 2}, 60%, 50%, ${0.08 * (1 - dist / 150)})`;
@@ -1224,200 +1263,17 @@
             document.querySelector('.nav-main').classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        // Drop zone mouse tracking
+        // Django form-based file picker only. No AJAX/fetch.
         const dropZone = document.getElementById('dropZone');
-        dropZone.addEventListener('mousemove', (e) => {
-            const rect = dropZone.getBoundingClientRect();
-            dropZone.style.setProperty('--dx', `${((e.clientX - rect.left) / rect.width) * 100}%`);
-            dropZone.style.setProperty('--dy', `${((e.clientY - rect.top) / rect.height) * 100}%`);
-        });
-
-        // File handling
         const fileInput = document.getElementById('fileInput');
-        const fileInfo = document.getElementById('fileInfo');
-        const analyzeBtn = document.getElementById('analyzeBtn');
-        const errorMsg = document.getElementById('errorMsg');
-        const errorText = document.getElementById('errorText');
+        const selectedFileCard = document.getElementById('selectedFileCard');
+        const selectedFileName = document.getElementById('selectedFileName');
+        const selectedFileSize = document.getElementById('selectedFileSize');
+        const uploadForm = document.getElementById('uploadForm');
+        const uploadBtn = document.getElementById('uploadBtn');
         const loadingOverlay = document.getElementById('loadingOverlay');
-        const targetColumn = document.getElementById('targetColumn');
-        const resultsContainer = document.getElementById('resultsContainer');
-        const columnsGrid = document.getElementById('columnsGrid');
-        const problemTypeSection = document.getElementById('problemTypeSection');
-
-        let selectedFile = null;
-        let columnsList = [];
-        let detectedType = null;
-
-        function getCSRF() {
-            return document.querySelector('[name=csrfmiddlewaretoken]').value;
-        }
-
-        dropZone.addEventListener('click', () => fileInput.click());
-        fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('dragover');
-        });
-        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('dragover');
-            handleFile(e.dataTransfer.files[0]);
-        });
-
-        // Problem type detection heuristic
-        function detectProblemType(columns, sampleData) {
-            const regKeywords = ['price', 'cost', 'amount', 'value', 'score', 'rating', 'temperature', 'age', 'salary', 'income', 'sales', 'revenue', 'profit', 'loss', 'weight', 'height', 'distance', 'time', 'duration', 'percentage', 'rate', 'count', 'quantity', 'size', 'volume', 'area', 'length', 'width', 'depth', 'speed', 'velocity', 'acceleration', 'force', 'pressure', 'density', 'mass', 'energy', 'power', 'voltage', 'current', 'resistance', 'frequency', 'wavelength', 'intensity', 'concentration', 'ph', 'humidity', 'precipitation', 'wind', 'radiation', 'dose', 'dosage', 'yield', 'output', 'input', 'throughput', 'latency', 'bandwidth', 'memory', 'cpu', 'gpu', 'fps', 'response', 'load', 'traffic', 'requests', 'errors', 'uptime', 'downtime', 'availability', 'reliability', 'mtbf', 'mttr', 'sla', 'kpi', 'metric', 'index', 'indicator', 'ratio', 'proportion', 'fraction', 'decimal', 'float', 'double', 'real', 'continuous', 'numeric', 'numerical', 'quantitative', 'interval'];
-            const clsKeywords = ['class', 'category', 'type', 'label', 'group', 'cluster', 'segment', 'tier', 'grade', 'level', 'rank', 'status', 'state', 'condition', 'result', 'outcome', 'decision', 'verdict', 'judgment', 'diagnosis', 'prediction', 'forecast', 'estimate', 'guess', 'hypothesis', 'theory', 'conclusion', 'finding', 'discovery', 'observation', 'measurement', 'reading', 'record', 'entry', 'item', 'product', 'service', 'customer', 'client', 'user', 'patient', 'student', 'employee', 'member', 'subscriber', 'visitor', 'buyer', 'seller', 'vendor', 'supplier', 'partner', 'competitor', 'industry', 'sector', 'domain', 'field', 'area', 'region', 'zone', 'territory', 'country', 'city', 'location', 'place', 'site', 'venue', 'destination', 'origin', 'source', 'channel', 'medium', 'platform', 'device', 'browser', 'os', 'language', 'currency', 'unit', 'format', 'mode', 'method', 'approach', 'strategy', 'tactic', 'technique', 'procedure', 'process', 'workflow', 'pipeline', 'stage', 'phase', 'step', 'action', 'task', 'activity', 'operation', 'function', 'role', 'job', 'position', 'title', 'designation', 'department', 'division', 'team', 'organization', 'company', 'brand', 'model', 'version', 'edition', 'variant', 'specification', 'configuration', 'setting', 'preference', 'option', 'choice', 'selection', 'alternative', 'flavor', 'style', 'theme', 'color', 'shape', 'pattern', 'texture', 'material', 'ingredient', 'component', 'part', 'element', 'factor', 'variable', 'parameter', 'argument', 'attribute', 'feature', 'property', 'characteristic', 'trait', 'quality', 'aspect', 'dimension', 'perspective', 'viewpoint', 'angle', 'side', 'facet'];
-
-            let regScore = 0,
-                clsScore = 0;
-            columns.forEach(col => {
-                const lower = col.toLowerCase();
-                regKeywords.forEach(k => {
-                    if (lower.includes(k)) regScore += 2;
-                });
-                clsKeywords.forEach(k => {
-                    if (lower.includes(k)) clsScore += 2;
-                });
-            });
-
-            // Also check sample data patterns
-            if (sampleData && sampleData.length > 0) {
-                const lastCol = sampleData[sampleData.length - 1];
-                const uniqueVals = new Set(sampleData.slice(0, Math.min(50, sampleData.length))).size;
-                const ratio = uniqueVals / Math.min(50, sampleData.length);
-                if (ratio < 0.3) clsScore += 3;
-                else regScore += 2;
-            }
-
-            const total = regScore + clsScore || 1;
-            const regConf = Math.round((regScore / total) * 100);
-            const clsConf = Math.round((clsScore / total) * 100);
-
-            if (regScore > clsScore) {
-                return {
-                    type: 'regression',
-                    confidence: regConf,
-                    icon: 'fa-chart-line',
-                    title: 'Regression Detected',
-                    subtitle: 'Continuous numerical values predicted',
-                    description: 'Your data appears to contain continuous numerical targets. The model will predict values like prices, scores, temperatures, or measurements.',
-                    samples: ['House Price: $450,000', 'Temperature: 23.5°C', 'Sales: $12,500', 'Age: 34 years']
-                };
-            } else {
-                return {
-                    type: 'classification',
-                    confidence: clsConf,
-                    icon: 'fa-tags',
-                    title: 'Classification Detected',
-                    subtitle: 'Discrete categories predicted',
-                    description: 'Your data appears to contain categorical targets. The model will predict classes like spam/ham, yes/no, or category labels.',
-                    samples: ['Spam: Yes / No', 'Churn: Active / Left', 'Grade: A / B / C', 'Diagnosis: Positive / Negative']
-                };
-            }
-        }
-
-        function showProblemType(detection) {
-            detectedType = detection.type;
-            const section = document.getElementById('problemTypeSection');
-            const icon = document.getElementById('ptIcon');
-            const title = document.getElementById('ptTitle');
-            const subtitle = document.getElementById('ptSubtitle');
-            const desc = document.getElementById('ptDescription');
-            const samples = document.getElementById('ptSamples');
-            const fill = document.getElementById('ptConfidenceFill');
-            const text = document.getElementById('ptConfidenceText');
-
-            section.classList.remove('d-none', 'detected-regression', 'detected-classification');
-            section.classList.add(`detected-${detection.type}`);
-
-            icon.className = `pt-icon ${detection.type}`;
-            icon.innerHTML = `<i class="fas ${detection.icon}"></i>`;
-            title.textContent = detection.title;
-            subtitle.textContent = detection.subtitle;
-            desc.textContent = detection.description;
-
-            samples.innerHTML = '';
-            detection.samples.forEach(s => {
-                const chip = document.createElement('span');
-                chip.className = `pt-sample ${detection.type === 'regression' ? 'reg' : 'cls'}`;
-                chip.textContent = s;
-                samples.appendChild(chip);
-            });
-
-            fill.className = `pt-confidence-fill ${detection.type}-fill`;
-            fill.style.width = '0%';
-            text.className = `pt-confidence-text ${detection.type}-text`;
-            text.textContent = '0%';
-
-            setTimeout(() => {
-                fill.style.width = `${detection.confidence}%`;
-                text.textContent = `${detection.confidence}% confidence`;
-            }, 300);
-        }
-
-        async function handleFile(file) {
-            if (!file) return;
-            selectedFile = file;
-            hideError();
-
-            const ext = file.name.split('.').pop().toLowerCase();
-            const allowed = ['csv', 'xlsx', 'json', 'xls'];
-            if (!allowed.includes(ext)) {
-                showError('Invalid file type! Please upload CSV, Excel, or JSON file.');
-                return;
-            }
-
-            document.getElementById('fileName').textContent = file.name;
-            document.getElementById('fileSize').textContent = formatFileSize(file.size);
-
-            const formData = new FormData();
-            formData.append('file', file);
-            formData.append('csrfmiddlewaretoken', getCSRF());
-
-            try {
-                const response = await fetch('/ml/', {
-                    method: 'POST',
-                    body: formData
-                });
-                const data = await response.json();
-
-                if (data.success) {
-                    document.getElementById('rowCount').textContent = data.rows.toLocaleString();
-                    document.getElementById('colCount').textContent = data.columns.length;
-                    columnsList = data.columns;
-
-                    // Show columns as chips
-                    columnsGrid.innerHTML = '';
-                    data.columns.forEach(col => {
-                        const chip = document.createElement('span');
-                        chip.className = 'column-chip';
-                        chip.textContent = col;
-                        columnsGrid.appendChild(chip);
-                    });
-
-                    // Detect and show problem type
-                    const detection = detectProblemType(data.columns, data.sample_data);
-                    showProblemType(detection);
-
-                    targetColumn.innerHTML = '<option value="">Choose the column you want to predict...</option>';
-                    data.columns.forEach(col => {
-                        const option = document.createElement('option');
-                        option.value = col;
-                        option.textContent = col;
-                        targetColumn.appendChild(option);
-                    });
-
-                    fileInfo.classList.remove('d-none');
-                    fileInfo.style.animation = 'fadeSlideUp 0.5s ease';
-                } else {
-                    showError(data.error || 'Error uploading file');
-                }
-            } catch (err) {
-                showError('Error uploading file: ' + err.message);
-            }
-        }
+        const analyzeForm = document.getElementById('analyzeForm');
+        const analyzeBtn = document.getElementById('analyzeBtn');
 
         function formatFileSize(bytes) {
             if (bytes === 0) return '0 B';
@@ -1427,82 +1283,54 @@
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
 
-        function showError(msg) {
-            errorText.textContent = msg;
-            errorMsg.classList.remove('d-none');
+        function showSelectedFile(file) {
+            if (!file) return;
+            selectedFileName.textContent = file.name;
+            selectedFileSize.textContent = formatFileSize(file.size);
+            selectedFileCard.classList.remove('d-none');
         }
 
-        function hideError() {
-            errorMsg.classList.add('d-none');
-        }
-
-        targetColumn.addEventListener('change', (e) => {
-            analyzeBtn.disabled = !e.target.value;
+        dropZone.addEventListener('mousemove', (e) => {
+            const rect = dropZone.getBoundingClientRect();
+            dropZone.style.setProperty('--dx', `${((e.clientX - rect.left) / rect.width) * 100}%`);
+            dropZone.style.setProperty('--dy', `${((e.clientY - rect.top) / rect.height) * 100}%`);
         });
 
-        analyzeBtn.addEventListener('click', async() => {
-            if (!selectedFile || !targetColumn.value) return;
-            analyzeBtn.disabled = true;
-            analyzeBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Preparing...';
-            loadingOverlay.classList.add('show');
-            hideError();
+        dropZone.addEventListener('click', () => fileInput.click());
 
-            try {
-                const formData = new FormData();
-                formData.append('file', selectedFile);
-                formData.append('target_column', targetColumn.value);
-                formData.append('csrfmiddlewaretoken', getCSRF());
+        fileInput.addEventListener('change', (e) => {
+            showSelectedFile(e.target.files[0]);
+        });
 
-                const response = await fetch('/ml/analyze/', {
-                    method: 'POST',
-                    body: formData
-                });
-                const data = await response.json();
-                loadingOverlay.classList.remove('show');
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
 
-                if (data.success) {
-                    showResults(data);
-                    analyzeBtn.classList.add('d-none');
-                    targetColumn.disabled = true;
-                } else {
-                    showError(data.error || 'Error running analysis');
-                    analyzeBtn.disabled = false;
-                    analyzeBtn.innerHTML = '<i class="fas fa-rocket"></i>Start ML Analysis';
-                }
-            } catch (err) {
-                loadingOverlay.classList.remove('show');
-                showError('Error: ' + err.message);
-                analyzeBtn.disabled = false;
-                analyzeBtn.innerHTML = '<i class="fas fa-rocket"></i>Start ML Analysis';
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            if (e.dataTransfer.files.length > 0) {
+                fileInput.files = e.dataTransfer.files;
+                showSelectedFile(e.dataTransfer.files[0]);
             }
         });
 
-        function showResults(data) {
-            const isRegression = data.problem_type === 'regression';
-            let tableRows = '';
-            let bestModel = data.best_model;
-            for (const [modelName, modelData] of Object.entries(data.all_results)) {
-                const score = isRegression ? modelData.test_r2 : modelData.test_accuracy;
-                const isBest = modelName === bestModel;
-                tableRows += `<tr class="${isBest ? 'best-row' : ''}"><td>${modelName}</td><td><span class="score-badge">${score}</span></td></tr>`;
-            }
-            resultsContainer.innerHTML = `
-                <div class="results-card">
-                    <div class="rc-header">
-                        <div class="rc-icon"><i class="fas fa-check-circle"></i></div>
-                        <div>
-                            <div class="rc-title">Analysis Complete</div>
-                            <div style="margin-top:6px;">
-                                <span class="rc-badge"><i class="fas fa-tag"></i>${data.problem_type}</span>
-                                <span class="rc-badge" style="margin-left:8px;background:rgba(0,255,157,0.08);border-color:rgba(0,255,157,0.15);color:var(--emerald);"><i class="fas fa-trophy"></i>${data.best_model}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <table class="results-table">
-                        <thead><tr><th>Model</th><th>${isRegression ? 'R² Score' : 'Accuracy'}</th></tr></thead>
-                        <tbody>${tableRows}</tbody>
-                    </table>
-                </div>`;
+        uploadForm.addEventListener('submit', () => {
+            uploadBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Uploading...';
+            uploadBtn.disabled = true;
+        });
+
+        if (analyzeForm) {
+            analyzeForm.addEventListener('submit', () => {
+                analyzeBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Running ML Analysis...';
+                analyzeBtn.disabled = true;
+                loadingOverlay.classList.add('show');
+            });
         }
     </script>
 </body>
