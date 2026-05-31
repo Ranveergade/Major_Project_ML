@@ -9,11 +9,14 @@ import os
 import numpy as np
 import traceback
 import json
+from django.contrib.auth.decorators import login_required
+from .models import UploadedDataset,User
 
 # Store file paths in memory (more reliable than session)
 _file_path_store = {}
 
 @csrf_exempt
+@login_required
 def upload_file(request):
     context = {}
 
@@ -33,13 +36,24 @@ def upload_file(request):
         try:
             if not request.session.session_key:
                 request.session.create()
+                
+            
+            existing_file=UploadedDataset.objects.filter(
+                user=request.user,
+                original_name=uploaded_file.name
+            ).first()
+            if existing_file:
+                context["error"]= f"{uploaded_file.name} already uploaded. Please check Results Page for ML analysis."
+                
 
-            file_path = default_storage.save(
-                f"dataset_{request.session.session_key}_{uploaded_file.name}",
-                uploaded_file
-            )
+            dataset_obj = UploadedDataset.objects.create(
+                    user=request.user,
+                    file=uploaded_file,
+                    original_name=uploaded_file.name
+                                                        )
+            
+            full_path = dataset_obj.file.path
 
-            full_path = default_storage.path(file_path)
 
             if file_ext == "csv":
                 df = pd.read_csv(full_path)
@@ -50,20 +64,25 @@ def upload_file(request):
 
             request.session["uploaded_file_path"] = full_path
             request.session["uploaded_filename"] = uploaded_file.name
+            request.session.modified = True
 
-            context["success"] = True
-            context["filename"] = uploaded_file.name
-            context["rows"] = df.shape[0]
-            context["cols"] = df.shape[1]
-            context["columns"] = [str(col) for col in df.columns]
-            context["preview"] = df.head(10).fillna("").to_dict("records")
+            context["success"]= True
+            context["filename"]=uploaded_file.name
+            context["rows"]=df.shape[0]
+            context["cols"]=df.shape[1]
+            context["columns"]=[str(col) for col in df.columns ]
 
         except Exception as e:
+            import traceback
+            print(traceback.format_exc())
             context["error"] = str(e)
+        
+        print("FINAL CONTEXT =", context)
 
     return render(request, "ml_engine/upload.html", context)
 
 @csrf_exempt
+
 def make_json_safe(obj):
     if isinstance(obj, dict):
         return {str(k): make_json_safe(v) for k, v in obj.items()}
@@ -94,7 +113,7 @@ def make_json_safe(obj):
 
     return obj
 
-
+@login_required
 def run_analysis(request):
     if request.method != "POST":
         return redirect("upload_file")  # change name if your URL name is different
@@ -175,7 +194,14 @@ def run_analysis(request):
         return render(request, "ml_engine/upload.html", {
             "error": error_msg
         })
-
+@login_required
 def results_page(request):
     ml_results = request.session.get('ml_results', {})
     return render(request, 'ml_engine/results.html', {'results': ml_results})
+
+
+
+@login_required
+def upload_history(request):
+    files = UploadedDataset.objects.filter(user=request.user).order_by("-uploaded_at")
+    return render(request, "ml_engine/history.html", {"files": files})

@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'core',
     'ml_engine',
     'dashboard',
+    'accounts'
 ]
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
@@ -89,5 +90,10 @@ X_FRAME_OPTIONS = 'DENY'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+#login setps
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGOUT_REDIRECT_URL = 'login'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 

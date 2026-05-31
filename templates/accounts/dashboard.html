@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard | ML Analytics Pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at top left, #062b2f, #05050a 35%, #070009);
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            height: 90px;
+            padding: 0 75px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            background: rgba(5, 5, 10, 0.75);
+            backdrop-filter: blur(18px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .logo-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #22d3ee, #ec4899);
+            display: grid;
+            place-items: center;
+            box-shadow: 0 0 30px rgba(34,211,238,0.45);
+        }
+
+        .nav-actions a {
+            text-decoration: none;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 14px;
+            font-weight: 700;
+            margin-left: 12px;
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, rgba(34,211,238,0.18), rgba(236,72,153,0.12));
+            border: 1px solid rgba(34,211,238,0.35);
+            box-shadow: 0 0 25px rgba(34,211,238,0.18);
+        }
+
+        .logout-btn {
+            background: rgba(239,68,68,0.15);
+            border: 1px solid rgba(239,68,68,0.4);
+        }
+
+        .container {
+            padding: 70px 75px;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 45px;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 12px 26px;
+            border-radius: 999px;
+            color: #22d3ee;
+            background: rgba(34,211,238,0.11);
+            border: 1px solid rgba(34,211,238,0.3);
+            letter-spacing: 4px;
+            font-weight: 800;
+            font-size: 13px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 72px;
+            line-height: 1.05;
+            margin-bottom: 22px;
+        }
+
+        .cyan {
+            color: #22d3ee;
+            text-shadow: 0 0 35px rgba(34,211,238,0.65);
+        }
+
+        .pink {
+            color: #ec4899;
+            text-shadow: 0 0 35px rgba(236,72,153,0.65);
+        }
+
+        .subtitle {
+            color: #a1a1c2;
+            font-size: 21px;
+            line-height: 1.7;
+            max-width: 720px;
+        }
+
+        .profile-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.025));
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 34px;
+            padding: 38px;
+            min-height: 330px;
+            box-shadow: 0 35px 80px rgba(0,0,0,0.45);
+            transform: rotate(-2deg);
+        }
+
+        .profile-icon {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 24px;
+            border-radius: 26px;
+            background: linear-gradient(135deg, #22d3ee, #ec4899);
+            display: grid;
+            place-items: center;
+            font-size: 42px;
+            box-shadow: 0 0 45px rgba(34,211,238,0.25);
+        }
+
+        .profile-card h2 {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .profile-card p {
+            text-align: center;
+            color: #a1a1c2;
+            font-size: 18px;
+        }
+
+        .stats {
+            margin-top: 30px;
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .pill {
+            padding: 12px 18px;
+            border-radius: 12px;
+            background: rgba(34,211,238,0.09);
+            border: 1px solid rgba(34,211,238,0.2);
+            color: #e5e7eb;
+            font-weight: 700;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 28px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.055);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 28px;
+            padding: 32px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+            transition: 0.25s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(34,211,238,0.5);
+            box-shadow: 0 0 45px rgba(34,211,238,0.12);
+        }
+
+        .card .icon {
+            font-size: 38px;
+            margin-bottom: 18px;
+        }
+
+        .card h3 {
+            font-size: 25px;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: #a1a1c2;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .card a {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            padding: 13px 22px;
+            border-radius: 14px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0891b2, #db2777);
+        }
+
+        @media(max-width: 900px) {
+            .navbar, .container {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 48px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">
+        <div class="logo-box">🧠</div>
+        ML Analytics Pro
+    </div>
+
+    <div class="nav-actions" style="display:flex;align-items:center;gap:15px;">
+
+    <a class="upload-btn" href="/">Home</a>
+
+    <div style="
+        width:45px;
+        height:45px;
+        border-radius:50%;
+        background:linear-gradient(135deg,#22d3ee,#ec4899);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:white;
+        font-weight:800;
+        font-size:18px;
+        box-shadow:0 0 20px rgba(34,211,238,0.4);
+    ">
+        {{ request.user.username|first|upper }}
+    </div>
+
+    <span style="
+        color:white;
+        font-weight:700;
+    ">
+        {{ request.user.username }}
+    </span>
+
+    <a class="logout-btn" href="{% url 'accounts:logout' %}">Logout</a>
+
+</div>
+</nav>
+
+<div class="container">
+
+    <section class="hero">
+        <div>
+            <div class="badge">USER DASHBOARD</div>
+            <h1>
+                Welcome Back,<br>
+                <span class="cyan">{{ request.user.username }}</span><br>
+                <span class="pink">Let’s Analyze</span>
+            </h1>
+            <p class="subtitle">
+                Upload datasets, run machine learning models, visualize insights,
+                and manage your complete AutoML workflow from one powerful dashboard.
+            </p>
+        </div>
+
+        <div class="profile-card">
+            <div class="profile-icon">⚡</div>
+            <h2>Neural Engine</h2>
+            <p>AutoML Pipeline Ready</p>
+
+            <div class="stats">
+                <div class="pill">✓ Linear</div>
+                <div class="pill">✓ Forest</div>
+                <div class="pill">✓ SVM</div>
+                <div class="pill">✓ XGB</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cards">
+        <div class="card">
+            <div class="icon">📤</div>
+            <h3>Upload Dataset</h3>
+            <p>Upload CSV or Excel files and prepare your data for automated ML analysis.</p>
+            <a href="{% url 'ml_engine:upload' %}">Upload File</a>
+        </div>
+
+        <div class="card">
+            <div class="icon">🧪</div>
+            <h3>Run Analysis</h3>
+            <p>Select features, choose algorithms, train models, and generate predictions.</p>
+            <a href="{% url 'ml_engine:analyze' %}">Analyze</a>
+        </div>
+
+        <div class="card">
+            <div class="icon">📊</div>
+            <h3>View Results</h3>
+            <p>Check accuracy, confusion matrix, performance metrics, and final outputs.</p>
+            <a href="{% url 'ml_engine:history' %}">Results</a>
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>

@@ -1612,6 +1612,64 @@
             transform-style: preserve-3d;
             transition: transform 0.1s ease-out;
         }
+        .user-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    border-radius: 50px;
+    background: rgba(0, 240, 255, 0.08);
+    border: 1px solid rgba(0, 240, 255, 0.25);
+    color: #fff;
+    font-weight: 700;
+}
+
+.user-pill::first-letter {
+    color: var(--cyan);
+}
+
+.user-pill span {
+    color: var(--cyan);
+}
+.user-circle {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00f0ff, #ff2a6d);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 800;
+    font-size: 18px;
+}
+.user-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 15px;
+    border-radius: 50px;
+    background: rgba(0, 240, 255, 0.08);
+    border: 1px solid rgba(0, 240, 255, 0.25);
+}
+
+.user-pill span {
+    color: white;
+    font-weight: 700;
+}
+
+.user-circle {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00f0ff, #ff2a6d);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 800;
+    font-size: 18px;
+}
     </style>
     <base target="_blank">
 </head>
@@ -1663,10 +1721,32 @@
                     <li class="nav-item"><a class="nav-link" href="#visualization">Viz</a></li>
                     <li class="nav-item"><a class="nav-link" href="#tech-stack">Stack</a></li>
 
-                    <li class="nav-item">
-                        <a href="/ml/" class="btn-glow ms-lg-3">
-                            <i class="fas fa-upload"></i> Upload
-                        </a>
+            {% if user.is_authenticated %}
+
+<li class="nav-item">
+    <a class="btn-glow" href="{% url 'accounts:dashboard' %}">
+        <i class="fas fa-chart-line"></i> Dashboard
+    </a>
+</li>
+
+<li class="nav-item">
+    <div class="user-pill">
+        <div class="user-circle">
+            {{ user.username|slice:":1"|upper }}
+        </div>
+        <span>{{ user.username }}</span>
+    </div>
+</li>
+
+{% else %}
+
+<li class="nav-item">
+    <a class="btn-glow" href="{% url 'accounts:login' %}">
+        <i class="fas fa-sign-in-alt"></i> Login
+    </a>
+</li>
+
+{% endif %}
                     </li>
 
                 </ul>
