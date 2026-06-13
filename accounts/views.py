@@ -15,11 +15,11 @@ def register_view(request):
 
         if password!=confirm_password:
             messages.error(request,"Password does not match")
-            return redirect("register")
+            return redirect("accounts:register")
         
         if User.objects.filter(username=username).exists():
             messages.error(request, "Username already exists")
-            return redirect("register")
+            return redirect("accounts:register")
         
         user=User.objects.create_user(
             username=username,
@@ -29,7 +29,7 @@ def register_view(request):
         user.save()
 
         messages.success(request,"Register successfully,Please login")
-        return redirect("login")
+        return redirect("accounts:login")
     return render(request, "accounts/register.html")
 
 def login_view(request):
