@@ -1063,98 +1063,352 @@
                 </div>
 
                 <div class="glass-card p-4 p-md-5">
-                    <form method="POST" enctype="multipart/form-data" action="/ml/" id="uploadForm">
-                        {% csrf_token %}
+                    <form method="POST" 
+                    enctype="multipart/form-data" 
+                    action="{% url 'ml_engine:upload' %}" 
+                    id="uploadForm">
 
-                        <div class="drop-zone" id="dropZone">
-                            <div class="drop-zone-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-                            <h4>Drag & Drop your file here</h4>
-                            <p class="dz-sub">or click anywhere in this area to browse</p>
-                            <div class="dz-formats">
-                                <span class="format-badge">.CSV</span>
-                                <span class="format-badge">.XLSX</span>
-                                <span class="format-badge">.JSON</span>
-                                <span class="format-badge">.XLS</span>
-                            </div>
-                            <input type="file" id="fileInput" name="file" accept=".csv,.xlsx,.json,.xls" hidden required>
+                    {% csrf_token %}
+
+                    <div class="drop-zone" id="dropZone">
+
+                        <div class="drop-zone-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
                         </div>
 
-                        <div class="file-info-card d-none" id="selectedFileCard">
-                            <div class="fi-header">
-                                <div class="fi-icon"><i class="fas fa-file-upload"></i></div>
-                                <div>
-                                    <div class="fi-name" id="selectedFileName">No file selected</div>
-                                    <div style="color:var(--text-dim);font-size:0.85rem;margin-top:4px;" id="selectedFileSize">Choose a dataset to continue</div>
-                                </div>
-                            </div>
+                        <h4>Drag & Drop your file here</h4>
+
+                        <p class="dz-sub">
+                            or click anywhere in this area to browse
+                        </p>
+
+                        <div class="dz-formats">
+                            <span class="format-badge">.CSV</span>
+                            <span class="format-badge">.XLSX</span>
+                            <span class="format-badge">.JSON</span>
+                            <span class="format-badge">.XLS</span>
                         </div>
 
-                        <button type="submit" class="btn-glow btn-lg mt-4" id="uploadBtn">
-                            <i class="fas fa-cloud-upload-alt"></i> Upload Dataset
-                        </button>
-                    </form>
 
-                    {% if error %}
-                    <div class="error-alert">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <div class="error-text">{{ error }}</div>
+                        <input 
+                        type="file"
+                        id="fileInput"
+                        name="file"
+                        accept=".csv,.xlsx,.json,.xls"
+                        hidden
+                        required>
+
                     </div>
-                    {% endif %}
 
-                    {% if success %}
-                    <div id="fileInfo">
-                        <div class="file-info-card">
-                            <div class="fi-header">
-                                <div class="fi-icon"><i class="fas fa-check-circle"></i></div>
-                                <div>
-                                    <div class="fi-name">{{ filename }}</div>
-                                    <div style="color:var(--emerald);font-size:0.85rem;margin-top:4px;">File uploaded successfully</div>
-                                </div>
+
+
+                    <div class="file-info-card d-none" id="selectedFileCard">
+
+                        <div class="fi-header">
+
+                            <div class="fi-icon">
+                                <i class="fas fa-file-upload"></i>
                             </div>
-                            <div class="fi-meta">
-                                <div class="fi-meta-item">
-                                    <div class="fi-label">Rows</div>
-                                    <div class="fi-value">{{ rows }}</div>
+
+
+                            <div>
+
+                                <div class="fi-name" id="selectedFileName">
+                                    No file selected
                                 </div>
-                                <div class="fi-meta-item">
-                                    <div class="fi-label">Columns</div>
-                                    <div class="fi-value">{{ cols }}</div>
+
+
+                                <div id="selectedFileSize"
+                                style="color:var(--text-dim)">
+                                    Choose dataset
                                 </div>
-                                <div class="fi-meta-item">
-                                    <div class="fi-label">Status</div>
-                                    <div class="fi-value" style="font-size:1.2rem;">Ready</div>
-                                </div>
+
+
                             </div>
+
                         </div>
 
-                        <div class="columns-preview">
-                            <div class="cp-label"><i class="fas fa-columns"></i> Detected Columns</div>
-                            <div class="columns-grid">
-                                {% for col in columns %}
-                                <span class="column-chip">{{ col }}</span>
-                                {% endfor %}
-                            </div>
-                        </div>
-
-                        <form method="POST" action="/ml/analyze/" id="analyzeForm">
-                            {% csrf_token %}
-                            <div class="target-section">
-                                <label><i class="fas fa-bullseye"></i> Select Target Column</label>
-                                <select class="form-select target-select" name="target_column" id="targetColumn" required>
-                                    <option value="">Choose the column you want to predict...</option>
-                                    {% for col in columns %}
-                                    <option value="{{ col }}">{{ col }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-
-                            <button class="btn-glow btn-lg mt-4" type="submit" id="analyzeBtn">
-                                <i class="fas fa-rocket"></i> Start ML Analysis
-                            </button>
-                        </form>
                     </div>
-                    {% endif %}
 
+
+
+                    <button 
+                    type="submit"
+                    class="btn-glow btn-lg mt-4"
+                    id="uploadBtn">
+
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        Upload Dataset
+
+                    </button>
+
+
+                </form>
+
+
+
+
+
+                {% if error %}
+
+                <div class="error-alert">
+
+                <i class="fas fa-exclamation-circle"></i>
+
+                <div class="error-text">
+                {{error}}
+                </div>
+
+                </div>
+
+                {% endif %}
+
+
+
+
+
+
+
+                {% if success %}
+
+
+
+                <div class="file-info-card">
+
+
+                <div class="fi-header">
+
+                <div class="fi-icon">
+                <i class="fas fa-check-circle"></i>
+                </div>
+
+
+                <div>
+
+                <div class="fi-name">
+                {{filename}}
+                </div>
+
+
+                <div style="color:var(--emerald)">
+                File uploaded successfully
+                </div>
+
+
+                </div>
+
+
+                </div>
+
+
+
+                <div class="fi-meta">
+
+
+                <div class="fi-meta-item">
+
+                <div class="fi-label">
+                Rows
+                </div>
+
+                <div class="fi-value">
+                {{rows}}
+                </div>
+
+
+                </div>
+
+
+
+                <div class="fi-meta-item">
+
+                <div class="fi-label">
+                Columns
+                </div>
+
+                <div class="fi-value">
+                {{cols}}
+                </div>
+
+
+                </div>
+
+
+
+
+                <div class="fi-meta-item">
+
+                <div class="fi-label">
+                Type
+                </div>
+
+
+                <div class="fi-value" style="font-size:1.1rem">
+
+                {{problem_type}}
+
+                </div>
+
+
+                </div>
+
+
+                </div>
+
+
+                </div>
+
+
+
+
+
+                <div class="columns-preview">
+
+
+                <div class="cp-label">
+
+                <i class="fas fa-columns"></i>
+
+                Detected Columns
+
+                </div>
+
+
+
+                <div class="columns-grid">
+
+
+                {% for col in columns %}
+
+                <span class="column-chip">
+                {{col}}
+                </span>
+
+
+                {% endfor %}
+
+
+                </div>
+
+
+                </div>
+
+
+
+                {% endif %}
+
+
+
+
+
+
+
+                <!-- SUPERVISED -->
+
+                {% if problem_type == "supervised" %}
+
+
+                <form method="POST"
+                id="analyzeForm"
+                action="{% url 'ml_engine:analyze' %}">
+
+                {% csrf_token %}
+                
+                <div class="target-section">
+
+                <label>
+                <i class="fas fa-bullseye"></i>
+                Select Target Column
+                </label>
+
+
+                <select 
+                name="target_column"
+                class="form-select target-select"
+                required>
+
+
+                <option value="">
+                -- Select Target Column --
+                </option>
+
+
+                {% for col in columns %}
+
+                <option value="{{col}}">
+                {{col}}
+                </option>
+
+                {% endfor %}
+
+
+                </select>
+                </div>
+
+
+
+                <button 
+                class="btn-glow btn-lg mt-4"
+                type="submit"
+                id="analyzeBtn">
+
+
+                <i class="fas fa-rocket"></i>
+
+                Start Supervised ML Analysis
+
+
+                </button>
+
+
+
+                </form>
+
+
+
+                {% endif %}
+
+
+
+
+
+
+
+                <!-- UNSUPERVISED -->
+
+                {% if problem_type == "unsupervised" %}
+
+
+
+                <form method="POST"
+                id="analyzeForm"
+                action="{% url 'ml_engine:run_unsupervised' %}"
+                enctype="multipart/form-data">
+
+
+                {% csrf_token %}
+
+
+
+                <button 
+                class="btn-glow btn-lg mt-4"
+                type="submit"
+                id="analyzeBtn">
+
+
+                <i class="fas fa-rocket"></i>
+
+                Start Unsupervised ML Analysis
+
+
+                </button>
+
+
+                </form>
+
+
+
+{% endif %}
                     {% if analysis_success %}
                     <div class="results-card">
                         <div class="rc-header">

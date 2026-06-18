@@ -228,44 +228,94 @@
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
-                        <tr>
-                            <th>Model</th>
-                            <th>Train Score</th>
-                            <th>Test Score</th>
-                            {% if results.problem_type == 'regression' %}
-                            <th>RMSE</th>
-                            <th>MAE</th>
-                            {% else %}
-                            <th>Precision</th>
-                            <th>Recall</th>
-                            <th>F1-Score</th>
-                            {% endif %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for model_name, model_data in results.all_models.items %}
-                        <tr>
-                            <td>
-                                {% if model_name == results.best_model %}
-                                <span class="model-badge">
-                                    <i class="fas fa-check-circle me-1"></i>{{ model_name }}
-                                </span> {% else %} {{ model_name }} {% endif %}
-                            </td>
-                            {% if results.problem_type == 'regression' %}
-                            <td>{{ model_data.train_r2|default:"N/A" }}</td>
-                            <td>{{ model_data.test_r2|default:"N/A" }}</td>
-                            <td>{{ model_data.test_rmse|default:"N/A" }}</td>
-                            <td>{{ model_data.test_mae|default:"N/A" }}</td>
-                            {% else %}
-                            <td>{{ model_data.train_accuracy|default:"N/A" }}</td>
-                            <td>{{ model_data.test_accuracy|default:"N/A" }}</td>
-                            <td>{{ model_data.classification_report.accuracy.precision|default:"N/A"|floatformat:3 }}</td>
-                            <td>{{ model_data.classification_report.accuracy.recall|default:"N/A"|floatformat:3 }}</td>
-                            <td>{{ model_data.classification_report.accuracy.f1_score|default:"N/A"|floatformat:3 }}</td>
-                            {% endif %}
-                        </tr>
-                        {% endfor %}
-                    </tbody>
+<tr>
+<th>Model</th>
+
+{% if results.problem_type == 'unsupervised' %}
+
+<th>Silhouette Score</th>
+<th>Clusters</th>
+
+{% elif results.problem_type == 'regression' %}
+
+<th>Train Score</th>
+<th>Test Score</th>
+<th>RMSE</th>
+<th>MAE</th>
+
+{% else %}
+
+<th>Train Score</th>
+<th>Test Score</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1 Score</th>
+
+{% endif %}
+
+</tr>
+</thead>
+<tbody>
+
+{% for model_name, model_data in results.all_models.items %}
+
+<tr>
+
+<td>
+{{model_name}}
+</td>
+
+
+{% if results.problem_type == 'unsupervised' %}
+
+<td>
+{{model_data.silhouette_score|default:"N/A"}}
+</td>
+
+
+<td>
+{{model_data.n_clusters|default:"N/A"}}
+</td>
+
+
+{% elif results.problem_type == 'regression' %}
+
+<td>{{model_data.train_r2}}</td>
+<td>{{model_data.test_r2}}</td>
+<td>{{model_data.test_rmse}}</td>
+<td>{{model_data.test_mae}}</td>
+
+
+{% else %}
+
+<td>{{ model_data.train_accuracy|default:"N/A" }}</td>
+
+<td>{{ model_data.test_accuracy|default:"N/A" }}</td>
+
+
+<td>
+{{ model_data.macro_avg.precision|default:"N/A" }}
+</td>
+
+
+<td>
+{{ model_data.macro_avg.recall|default:"N/A" }}
+</td>
+
+
+<td>
+{{ model_data.macro_avg.f1_score|default:"N/A" }}
+</td>
+
+
+{% endif %}
+
+
+</tr>
+
+{% endfor %}
+
+</tbody>
                 </table>
             </div>
         </div>

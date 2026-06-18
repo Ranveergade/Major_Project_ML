@@ -9,4 +9,5 @@ urlpatterns = [
     path('analyze/', views.run_analysis, name='analyze'),
     path('results/', views.results_page, name='results'),
     path("history/", views.upload_history, name="history"),
+    path("run-unsupervised/",views.run_unsupervised,name="run_unsupervised"),
 ]

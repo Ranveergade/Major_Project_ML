@@ -1246,3 +1246,59 @@ class MLEngine:
             'best_score': self.best_score,
             'all_results': self.models_results
         }
+    
+    def auto_detect_dataset_type(self):
+
+        if self.df is None:
+            raise ValueError("Dataset not loaded")
+
+
+        df = self.df
+
+        print("CHECKING DATASET")
+
+
+        # remove ID columns
+        columns = [
+            col for col in df.columns
+            if "id" not in col.lower()
+        ]
+
+
+        print("USABLE COLUMNS:", columns)
+
+
+        # If dataset has no obvious label column
+        # treat it as unsupervised
+
+        for col in columns:
+
+            unique = df[col].nunique()
+
+            print(
+                col,
+                unique,
+                df[col].dtype
+            )
+
+
+            # only consider a column target if:
+            # - numeric
+            # - very few unique values
+            # - not text
+
+            if (
+                df[col].dtype != "object"
+                and unique <= 10
+            ):
+
+                return {
+                    "type": "supervised",
+                    "targets": [col]
+                }
+
+
+        return {
+            "type": "unsupervised",
+            "targets": []
+        }
