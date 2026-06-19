@@ -9,5 +9,6 @@ urlpatterns = [
     path('analyze/', views.run_analysis, name='analyze'),
     path('results/', views.results_page, name='results'),
     path("history/", views.upload_history, name="history"),
+    path("delete/<int:file_id>/", views.delete_dataset, name="delete_dataset"),
     path("run-unsupervised/",views.run_unsupervised,name="run_unsupervised"),
 ]

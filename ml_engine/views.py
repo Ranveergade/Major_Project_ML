@@ -229,6 +229,20 @@ def upload_history(request):
     return render(request, "ml_engine/history.html", {"files": files})
 
 @login_required
+def delete_dataset(request, file_id):
+    """Delete a dataset permanently"""
+    try:
+        dataset = UploadedDataset.objects.get(id=file_id, user=request.user)
+        # Delete the file from storage
+        if dataset.file:
+            dataset.file.delete()
+        # Delete the database record
+        dataset.delete()
+        return redirect("ml_engine:history")
+    except UploadedDataset.DoesNotExist:
+        return redirect("ml_engine:history")
+
+@login_required
 def run_unsupervised(request):
     
 

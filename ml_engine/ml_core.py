@@ -22,19 +22,10 @@ from sklearn.metrics import (
     roc_curve, auc, precision_recall_curve
 )
 from sklearn.datasets import make_classification
-from xgboost import XGBRegressor, XGBClassifier
 import warnings
 import io
 import base64
 warnings.filterwarnings('ignore')
-
-# Try importing XGBoost
-try:
-    from xgboost import XGBRegressor, XGBClassifier
-    XGBOOST_AVAILABLE = True
-except:
-    XGBOOST_AVAILABLE = False
-
 # ==================== UNSUPERVISED LEARNING IMPORTS ====================
 from sklearn.cluster import KMeans, DBSCAN, AgglomerativeClustering
 from sklearn.decomposition import PCA
@@ -46,7 +37,6 @@ from sklearn.metrics import (
 )
 from scipy.cluster.hierarchy import dendrogram, linkage
 from scipy.spatial.distance import pdist, squareform
-from kneed import KneeLocator
 # =====================================================================
 
 class MLEngine:
@@ -1010,8 +1000,6 @@ class MLEngine:
                 'SVR': SVR(),
                 'SVM Regressor': SVR(kernel='rbf'),
             }
-            if XGBOOST_AVAILABLE:
-                models['XGBoost Regressor'] = XGBRegressor(n_estimators=100, random_state=random_state, verbosity=0)
         else:
             models = {
                 'Logistic Regression': LogisticRegression(max_iter=1000, random_state=random_state),
@@ -1021,9 +1009,6 @@ class MLEngine:
                 'KNN': KNeighborsClassifier(n_neighbors=5),
                 'SVM': SVC(kernel='rbf', random_state=random_state, probability=True),
             }
-            if XGBOOST_AVAILABLE:
-                models['XGBoost Classifier'] = XGBClassifier(n_estimators=100, random_state=random_state, verbosity=0, use_label_encoder=False, eval_metric='logloss')
-
         results = {}
 
         for name, model in models.items():

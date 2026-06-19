@@ -37,10 +37,13 @@
             --gold-glow: rgba(255, 215, 0, 0.3);
             --emerald: #00ff9d;
             --emerald-glow: rgba(0, 255, 157, 0.3);
+            --orange: #ff6b35;
+            --orange-glow: rgba(255, 107, 53, 0.3);
             --grad-cyan-mag: linear-gradient(135deg, var(--cyan), var(--magenta));
             --grad-violet-cyan: linear-gradient(135deg, var(--violet), var(--cyan));
             --grad-mag-gold: linear-gradient(135deg, var(--magenta), var(--gold));
             --grad-emerald-cyan: linear-gradient(135deg, var(--emerald), var(--cyan));
+            --grad-orange-violet: linear-gradient(135deg, var(--orange), var(--violet));
         }
         
         * {
@@ -362,15 +365,12 @@
             right: 0;
             z-index: 1000;
             height: 80px;
-            /* FIXED HEIGHT */
             display: flex;
             align-items: center;
             background: rgba(3, 3, 8, 0.7);
             backdrop-filter: blur(24px) saturate(1.2);
             border-bottom: 1px solid rgba(255, 255, 255, 0.04);
             transition: all 0.4s ease;
-            /* ❌ REMOVE THIS */
-            /* margin-bottom: 100px; */
         }
         
         .nav-main.scrolled {
@@ -378,12 +378,10 @@
             border-bottom-color: rgba(0, 240, 255, 0.1);
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
         }
-        /* Push content below fixed navbar */
         
         body {
             padding-top: 80px;
         }
-        /* Brand */
         
         .nav-brand {
             font-family: 'Space Grotesk', sans-serif;
@@ -406,7 +404,6 @@
             justify-content: center;
             box-shadow: 0 0 20px var(--cyan-glow);
         }
-        /* Links */
         
         .nav-link {
             color: var(--text-dim) !important;
@@ -426,7 +423,6 @@
             color: var(--cyan) !important;
             background: rgba(0, 240, 255, 0.1);
         }
-        /* Mobile Fix */
         
         .navbar-toggler {
             border: 1px solid rgba(255, 255, 255, 0.15);
@@ -463,6 +459,11 @@
         .hero-title .glow-mag {
             color: var(--magenta);
             text-shadow: 0 0 40px var(--magenta-glow), 0 0 80px var(--magenta-glow);
+        }
+        
+        .hero-title .glow-orange {
+            color: var(--orange);
+            text-shadow: 0 0 40px var(--orange-glow), 0 0 80px var(--orange-glow);
         }
         
         .hero-sub {
@@ -649,6 +650,12 @@
             font-family: 'JetBrains Mono', monospace;
         }
         
+        .sec-label-orange {
+            background: rgba(255, 107, 53, 0.08);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            color: var(--orange);
+        }
+        
         .sec-title {
             font-family: 'Space Grotesk', sans-serif;
             font-size: clamp(2.2rem, 4.5vw, 3.5rem);
@@ -666,6 +673,11 @@
         .sec-title .glow-mag {
             color: var(--magenta);
             text-shadow: 0 0 30px var(--magenta-glow);
+        }
+        
+        .sec-title .glow-orange {
+            color: var(--orange);
+            text-shadow: 0 0 30px var(--orange-glow);
         }
         
         .sec-sub {
@@ -739,11 +751,27 @@
             box-shadow: 0 4px 12px rgba(0, 240, 255, 0.15);
         }
         
+        .tag-orange {
+            background: rgba(255, 107, 53, 0.08);
+            border: 1px solid rgba(255, 107, 53, 0.15);
+            color: var(--orange);
+        }
+        
+        .tag-orange:hover {
+            background: rgba(255, 107, 53, 0.2);
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.15);
+        }
+        
         .hl {
             background: linear-gradient(180deg, transparent 55%, rgba(0, 240, 255, 0.2) 55%);
             padding: 0 3px;
             font-weight: 600;
             color: #b0f0ff;
+        }
+        
+        .hl-orange {
+            background: linear-gradient(180deg, transparent 55%, rgba(255, 107, 53, 0.2) 55%);
+            color: #ffb899;
         }
         /* ===== FEATURE CARDS ===== */
         
@@ -932,6 +960,17 @@
         .badge-model i {
             font-size: 0.65rem;
             color: var(--emerald);
+        }
+        
+        .badge-model-orange {
+            background: rgba(255, 107, 53, 0.06);
+            border: 1px solid rgba(255, 107, 53, 0.12);
+        }
+        
+        .badge-model-orange:hover {
+            background: rgba(255, 107, 53, 0.15);
+            border-color: rgba(255, 107, 53, 0.35);
+            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.15);
         }
         /* ===== METRICS ===== */
         
@@ -1612,65 +1651,387 @@
             transform-style: preserve-3d;
             transition: transform 0.1s ease-out;
         }
+        /* ===== USER PILL ===== */
+        
         .user-pill {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 18px;
-    border-radius: 50px;
-    background: rgba(0, 240, 255, 0.08);
-    border: 1px solid rgba(0, 240, 255, 0.25);
-    color: #fff;
-    font-weight: 700;
-}
-
-.user-pill::first-letter {
-    color: var(--cyan);
-}
-
-.user-pill span {
-    color: var(--cyan);
-}
-.user-circle {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #00f0ff, #ff2a6d);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: 800;
-    font-size: 18px;
-}
-.user-pill {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 15px;
-    border-radius: 50px;
-    background: rgba(0, 240, 255, 0.08);
-    border: 1px solid rgba(0, 240, 255, 0.25);
-}
-
-.user-pill span {
-    color: white;
-    font-weight: 700;
-}
-
-.user-circle {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #00f0ff, #ff2a6d);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: 800;
-    font-size: 18px;
-}
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 15px;
+            border-radius: 50px;
+            background: rgba(0, 240, 255, 0.08);
+            border: 1px solid rgba(0, 240, 255, 0.25);
+        }
+        
+        .user-pill span {
+            color: white;
+            font-weight: 700;
+        }
+        
+        .user-circle {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00f0ff, #ff2a6d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 18px;
+        }
+        /* ===== UNSUPERVISED SECTION NEW STYLES ===== */
+        
+        .unsupervised-card {
+            padding: 36px;
+            height: 100%;
+            position: relative;
+        }
+        
+        .unsupervised-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--grad-orange-violet);
+            border-radius: 24px 24px 0 0;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .unsupervised-card:hover::after {
+            opacity: 1;
+        }
+        
+        .unsupervised-card h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .hp-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+            font-size: 0.85rem;
+        }
+        
+        .hp-table th {
+            background: rgba(255, 107, 53, 0.1);
+            color: var(--orange);
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 107, 53, 0.2);
+        }
+        
+        .hp-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: var(--text-dim);
+        }
+        
+        .hp-table tr:hover td {
+            background: rgba(255, 107, 53, 0.03);
+            color: var(--text);
+        }
+        
+        .hp-table code {
+            background: rgba(255, 107, 53, 0.1);
+            color: var(--orange);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+        }
+        
+        .algo-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+        
+        .cluster-viz {
+            width: 100%;
+            height: 200px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255, 107, 53, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .cluster-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: clusterFloat 3s ease-in-out infinite;
+        }
+        
+        @keyframes clusterFloat {
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(5px, -5px);
+            }
+        }
+        
+        .dim-red-viz {
+            width: 100%;
+            height: 200px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(189, 0, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .dim-axis {
+            position: absolute;
+            background: rgba(189, 0, 255, 0.3);
+        }
+        
+        .dim-axis.x {
+            width: 80%;
+            height: 2px;
+            bottom: 20%;
+            left: 10%;
+        }
+        
+        .dim-axis.y {
+            width: 2px;
+            height: 60%;
+            bottom: 20%;
+            left: 10%;
+        }
+        
+        .dim-point {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            animation: dimPulse 2s ease infinite;
+        }
+        
+        @keyframes dimPulse {
+            0%,
+            100% {
+                opacity: 0.4;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.3);
+            }
+        }
+        
+        .association-viz {
+            width: 100%;
+            height: 200px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(0, 255, 157, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .assoc-node {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #fff;
+            animation: assocPulse 2.5s ease infinite;
+        }
+        
+        .assoc-line {
+            position: absolute;
+            height: 2px;
+            background: rgba(0, 255, 157, 0.3);
+            transform-origin: left center;
+            animation: assocLine 3s ease infinite;
+        }
+        
+        @keyframes assocPulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        
+        @keyframes assocLine {
+            0%,
+            100% {
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+        /* Learning type tabs */
+        
+        .learning-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .learning-tab {
+            padding: 12px 28px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-dim);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+        
+        .learning-tab:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+        
+        .learning-tab.active {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: rgba(0, 240, 255, 0.3);
+            color: var(--cyan);
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.1);
+        }
+        
+        .learning-tab.active-orange {
+            background: rgba(255, 107, 53, 0.1);
+            border-color: rgba(255, 107, 53, 0.3);
+            color: var(--orange);
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.1);
+        }
+        /* Silhouette score bar */
+        
+        .silhouette-bar {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        
+        .silhouette-fill {
+            height: 100%;
+            border-radius: 4px;
+            background: var(--grad-orange-violet);
+            animation: silGrow 2s ease forwards;
+        }
+        
+        @keyframes silGrow {
+            from {
+                width: 0%;
+            }
+        }
+        /* Elbow curve animation */
+        
+        .elbow-curve {
+            width: 100%;
+            height: 120px;
+            position: relative;
+            margin: 16px 0;
+        }
+        
+        .elbow-line {
+            position: absolute;
+            bottom: 20px;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background: rgba(255, 107, 53, 0.3);
+        }
+        
+        .elbow-point {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--orange);
+            box-shadow: 0 0 10px var(--orange-glow);
+            animation: elbowPop 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        @keyframes elbowPop {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+            from {
+                opacity: 0;
+                transform: scale(0);
+            }
+        }
+        /* Dendrogram viz */
+        
+        .dendro-viz {
+            width: 100%;
+            height: 160px;
+            position: relative;
+            margin: 16px 0;
+        }
+        
+        .dendro-line {
+            position: absolute;
+            background: rgba(255, 107, 53, 0.4);
+            animation: dendroGrow 1s ease forwards;
+            transform-origin: top;
+        }
+        
+        @keyframes dendroGrow {
+            from {
+                transform: scaleY(0);
+            }
+            to {
+                transform: scaleY(1);
+            }
+        }
     </style>
+    <base target="_blank">
     <base target="_blank">
 </head>
 
@@ -1694,66 +2055,51 @@
 
     <nav class="nav-main navbar navbar-expand-lg">
         <div class="container">
-
-            <!-- Logo -->
             <a href="#" class="navbar-brand nav-brand">
-                <div class="brand-icon">
-                    <i class="fas fa-brain"></i>
-                </div>
+                <div class="brand-icon"><i class="fas fa-brain"></i></div>
                 ML Analytics Pro
             </a>
-
-            <!-- Toggle -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navCollapse">
-            <i class="fas fa-bars text-white"></i>
-        </button>
-
-            <!-- Menu -->
+                <i class="fas fa-bars text-white"></i>
+            </button>
             <div class="collapse navbar-collapse" id="navCollapse">
                 <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
-
                     <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
                     <li class="nav-item"><a class="nav-link" href="#how-it-works">Workflow</a></li>
                     <li class="nav-item"><a class="nav-link" href="#ml-details">ML Models</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#unsupervised">Unsupervised</a></li>
                     <li class="nav-item"><a class="nav-link" href="#data-science">Data Science</a></li>
                     <li class="nav-item"><a class="nav-link" href="#visualization">Viz</a></li>
                     <li class="nav-item"><a class="nav-link" href="#tech-stack">Stack</a></li>
 
-            {% if user.is_authenticated %}
-
-<li class="nav-item">
-    <a class="btn-glow" href="{% url 'accounts:dashboard' %}">
-        <i class="fas fa-chart-line"></i> Dashboard
-    </a>
-</li>
-
-<li class="nav-item">
-    <div class="user-pill">
-        <div class="user-circle">
-            {{ user.username|slice:":1"|upper }}
-        </div>
-        <span>{{ user.username }}</span>
-    </div>
-</li>
-
-{% else %}
-
-<li class="nav-item">
-    <a class="btn-glow" href="{% url 'accounts:login' %}">
-        <i class="fas fa-sign-in-alt"></i> Login
-    </a>
-</li>
-
-{% endif %}
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="btn-glow" href="{% url 'accounts:dashboard' %}">
+                            <i class="fas fa-chart-line"></i> Dashboard
+                        </a>
                     </li>
-
+                    <li class="nav-item">
+                        <div class="user-pill">
+                            <div class="user-circle">
+                                {{ user.username|slice:":1"|upper }}
+                            </div>
+                            <span>{{ user.username }}</span>
+                        </div>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="btn-glow" href="{% url 'accounts:login' %}">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
-
         </div>
     </nav>
+
     <!-- HERO -->
     <section class="hero" id="home">
         <div class="container">
@@ -1768,7 +2114,7 @@
                         <span class="glow-mag">Decisions</span>
                     </h1>
                     <p class="hero-sub">
-                        Automated Machine Learning, EDA, and Deep Insights in Seconds. No coding required &mdash; upload your dataset and let our neural engine handle the entire pipeline.
+                        Automated Machine Learning, EDA, and Deep Insights in Seconds. No coding required — upload your dataset and let our neural engine handle the entire pipeline.
                     </p>
                     <div class="d-flex flex-wrap gap-3 mb-5">
                         <a href="/ml/" class="btn-glow"><i class="fas fa-cloud-upload-alt"></i>Upload Dataset</a>
@@ -1777,7 +2123,7 @@
                     <div class="row g-3">
                         <div class="col-6 col-md-3">
                             <div class="hero-stat" data-aos="fade-up" data-aos-delay="300">
-                                <h4 class="counter" data-target="10">0</h4>
+                                <h4 class="counter" data-target="15">0</h4>
                                 <span>ML Algorithms</span>
                             </div>
                         </div>
@@ -1804,7 +2150,6 @@
 
                 <div class="col-lg-6 d-none d-lg-block" data-aos="fade-left" data-aos-duration="1200">
                     <div class="hero-3d-stack">
-                        <!-- Floating 3D Cards -->
                         <div class="card-3d" data-aos="zoom-in" data-aos-delay="400">
                             <div class="c3d-icon" style="background:linear-gradient(135deg,rgba(0,240,255,0.3),rgba(0,240,255,0.1));"><i class="fas fa-chart-line" style="color:var(--cyan);"></i></div>
                             <h6 style="color:var(--cyan);">Regression</h6>
@@ -1816,22 +2161,18 @@
                             <p>Multi-class category detection with probability scores</p>
                         </div>
                         <div class="card-3d" data-aos="zoom-in" data-aos-delay="800">
-                            <div class="c3d-icon" style="background:linear-gradient(135deg,rgba(189,0,255,0.3),rgba(189,0,255,0.1));"><i class="fas fa-magic" style="color:var(--violet);"></i></div>
-                            <h6 style="color:var(--violet);">Auto EDA</h6>
-                            <p>Statistical profiling and anomaly detection</p>
+                            <div class="c3d-icon" style="background:linear-gradient(135deg,rgba(255,107,53,0.3),rgba(255,107,53,0.1));"><i class="fas fa-object-group" style="color:var(--orange);"></i></div>
+                            <h6 style="color:var(--orange);">Clustering</h6>
+                            <p>Discover hidden patterns and natural groupings</p>
                         </div>
-
-                        <!-- Main Hero Card -->
                         <div class="hero-main-card" data-aos="zoom-in" data-aos-delay="200">
                             <div class="hmc-brain"><i class="fas fa-brain"></i></div>
                             <h4 style="font-family:'Space Grotesk';font-weight:800;margin-bottom:10px;">Neural Engine</h4>
                             <p style="color:var(--text-dim);margin-bottom:20px;">AutoML Pipeline Active</p>
                             <div class="d-flex flex-wrap justify-content-center gap-2">
-                                <span class="badge-model"><i class="fas fa-check"></i>Linear</span>
-                                <span class="badge-model"><i class="fas fa-check"></i>Forest</span>
-                                <span class="badge-model"><i class="fas fa-check"></i>SVM</span>
-                                <span class="badge-model"><i class="fas fa-check"></i>XGB</span>
-                                <span class="badge-model"><i class="fas fa-check"></i>NN</span>
+                                <span class="badge-model"><i class="fas fa-check"></i>Supervised</span>
+                                <span class="badge-model"><i class="fas fa-check"></i>Unsupervised</span>
+                                <span class="badge-model"><i class="fas fa-check"></i>Deep Learning</span>
                             </div>
                         </div>
                     </div>
@@ -1854,9 +2195,7 @@
                     <div class="glass intro-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
                         <div class="ic-icon" style="background:linear-gradient(135deg,rgba(0,240,255,0.2),rgba(189,0,255,0.2));"><i class="fas fa-robot" style="color:var(--cyan);"></i></div>
                         <h4>What is Artificial Intelligence?</h4>
-                        <p><span class="hl">Artificial Intelligence (AI)</span> refers to computer systems capable of performing tasks that typically require human intelligence &mdash; visual perception, speech recognition, decision-making, and language
-                            translation.
-                        </p>
+                        <p><span class="hl">Artificial Intelligence (AI)</span> refers to computer systems capable of performing tasks that typically require human intelligence — visual perception, speech recognition, decision-making, and language translation.</p>
                         <p style="font-size:0.88rem;color:var(--text-dim);margin-top:12px;">Our platform leverages <strong style="color:#fff;">supervised learning</strong> to build predictive models that learn patterns from historical data and apply them to new datasets.</p>
                         <div class="mt-3">
                             <span class="tag">Neural Networks</span><span class="tag">Deep Learning</span><span class="tag">NLP</span><span class="tag">Computer Vision</span>
@@ -1911,8 +2250,8 @@
                                             <h5 style="color:var(--magenta);font-weight:800;margin-bottom:4px;">60%</h5><small style="color:var(--text-dim);">Error Reduction</small></div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="p-3 rounded-4" style="background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.12);">
-                                            <h5 style="color:var(--gold);font-weight:800;margin-bottom:4px;">24/7</h5><small style="color:var(--text-dim);">Auto Processing</small></div>
+                                        <div class="p-3 rounded-4" style="background:rgba(255,107,53,0.06);border:1px solid rgba(255,107,53,0.12);">
+                                            <h5 style="color:var(--orange);font-weight:800;margin-bottom:4px;">24/7</h5><small style="color:var(--text-dim);">Auto Processing</small></div>
                                     </div>
                                 </div>
                             </div>
@@ -1929,7 +2268,7 @@
             <div class="text-center mb-5" data-aos="fade-up">
                 <div class="sec-label"><i class="fas fa-microchip"></i> Capabilities</div>
                 <h2 class="sec-title">Powerful <span class="glow-cyan">Platform Features</span></h2>
-                <p class="sec-sub">Everything you need to go from raw data to actionable insights &mdash; fully automated, beautifully visualized, and production-ready.</p>
+                <p class="sec-sub">Everything you need to go from raw data to actionable insights — fully automated, beautifully visualized, and production-ready.</p>
             </div>
 
             <div class="row g-4">
@@ -1937,7 +2276,7 @@
                     <div class="glass feat-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
                         <div class="feat-icon" style="background:linear-gradient(135deg,rgba(0,240,255,0.25),rgba(189,0,255,0.15));"><i class="fas fa-chart-bar" style="color:var(--cyan);"></i></div>
                         <h5>Automated EDA</h5>
-                        <p>Comprehensive exploratory analysis: mean, median, mode, standard deviation, correlation matrices, distribution histograms, box plots, and pair plots &mdash; generated automatically.</p>
+                        <p>Comprehensive exploratory analysis: mean, median, mode, standard deviation, correlation matrices, distribution histograms, box plots, and pair plots — generated automatically.</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
@@ -1951,28 +2290,28 @@
                     <div class="glass feat-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
                         <div class="feat-icon" style="background:linear-gradient(135deg,rgba(255,42,109,0.25),rgba(255,215,0,0.15));"><i class="fas fa-sliders-h" style="color:var(--magenta);"></i></div>
                         <h5>Feature Scaling</h5>
-                        <p>Applies StandardScaler, MinMaxScaler, RobustScaler, and Normalizer &mdash; automatically selecting the optimal method based on your data's distribution characteristics.</p>
+                        <p>Applies StandardScaler, MinMaxScaler, RobustScaler, and Normalizer — automatically selecting the optimal method based on your data's distribution characteristics.</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6" data-aos="fade-up">
                     <div class="glass feat-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
                         <div class="feat-icon" style="background:linear-gradient(135deg,rgba(189,0,255,0.25),rgba(0,240,255,0.15));"><i class="fas fa-robot" style="color:var(--violet);"></i></div>
                         <h5>Auto Problem Detection</h5>
-                        <p>Intelligently analyzes your target variable to determine Regression (continuous) or Classification (categorical) &mdash; zero manual configuration required.</p>
+                        <p>Intelligently analyzes your target variable to determine Regression (continuous), Classification (categorical), or Unsupervised (no labels) — zero manual configuration required.</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                     <div class="glass feat-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
-                        <div class="feat-icon" style="background:linear-gradient(135deg,rgba(0,240,255,0.25),rgba(0,255,157,0.15));"><i class="fas fa-brain" style="color:var(--cyan);"></i></div>
-                        <h5>Multiple Algorithms</h5>
-                        <p>Tests 10+ ML algorithms in parallel: Linear Regression, Random Forest, XGBoost, SVM, Neural Networks, and ensemble methods &mdash; ranked by performance.</p>
+                        <div class="feat-icon" style="background:linear-gradient(135deg,rgba(255,107,53,0.25),rgba(189,0,255,0.15));"><i class="fas fa-object-group" style="color:var(--orange);"></i></div>
+                        <h5>Unsupervised Learning</h5>
+                        <p>Automatic clustering with K-Means, DBSCAN, Hierarchical clustering. Dimensionality reduction via PCA, t-SNE, UMAP. Association rule mining with Apriori and FP-Growth.</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
                     <div class="glass feat-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
                         <div class="feat-icon" style="background:linear-gradient(135deg,rgba(255,215,0,0.25),rgba(255,42,109,0.15));"><i class="fas fa-chart-pie" style="color:var(--gold);"></i></div>
                         <h5>Rich Visualizations</h5>
-                        <p>Interactive heatmaps, confusion matrices, ROC curves, feature importance charts, and residual plots using Plotly &mdash; exportable as PNG, PDF, or HTML.</p>
+                        <p>Interactive heatmaps, confusion matrices, ROC curves, feature importance charts, cluster scatter plots, dendrograms, and residual plots using Plotly — exportable as PNG, PDF, or HTML.</p>
                     </div>
                 </div>
             </div>
@@ -2020,7 +2359,7 @@
                                 <div class="t-num">3</div>
                                 <div style="font-size:2.5rem;margin-bottom:16px;"><i class="fas fa-search" style="color:var(--magenta);"></i></div>
                                 <h4>Detects Problem Type</h4>
-                                <p>Heuristics on the target variable determine <strong style="color:#fff;">Regression</strong> (continuous values like price) or <strong style="color:#fff;">Classification</strong> (categories like spam/ham).</p>
+                                <p>Heuristics on the target variable determine <strong style="color:#fff;">Regression</strong> (continuous values), <strong style="color:#fff;">Classification</strong> (categories), or <strong style="color:#fff;">Unsupervised</strong>                                    (no labels) — fully automatic.</p>
                             </div>
                         </div>
                     </div>
@@ -2032,7 +2371,7 @@
                                 <div class="t-num">4</div>
                                 <div style="font-size:2.5rem;margin-bottom:16px;"><i class="fas fa-bolt" style="color:var(--gold);"></i></div>
                                 <h4>Applies ML Algorithms</h4>
-                                <p>Multiple algorithms train in parallel with automatic hyperparameter tuning via GridSearchCV. Cross-validation ensures robust performance estimates.</p>
+                                <p>Multiple algorithms train in parallel with automatic hyperparameter tuning via GridSearchCV and Bayesian Optimization. Cross-validation ensures robust performance estimates.</p>
                             </div>
                         </div>
                     </div>
@@ -2044,7 +2383,7 @@
                                 <div class="t-num">5</div>
                                 <div style="font-size:2.5rem;margin-bottom:16px;"><i class="fas fa-chart-line" style="color:var(--violet);"></i></div>
                                 <h4>Results & Visualizations</h4>
-                                <p>View accuracy scores, confusion matrices, feature importance, prediction plots, and downloadable reports. Export models as Pickle or ONNX for production.</p>
+                                <p>View accuracy scores, confusion matrices, cluster assignments, feature importance, prediction plots, and downloadable reports. Export models as Pickle or ONNX for production.</p>
                             </div>
                         </div>
                     </div>
@@ -2053,13 +2392,18 @@
         </div>
     </section>
 
-    <!-- ML DETAILS -->
+    <!-- ML DETAILS - SUPERVISED -->
     <section class="sec-pad" id="ml-details" style="background:linear-gradient(180deg,transparent,rgba(0,255,157,0.02),transparent);">
         <div class="container">
             <div class="text-center mb-5" data-aos="fade-up">
                 <div class="sec-label"><i class="fas fa-project-diagram"></i> Deep Dive</div>
-                <h2 class="sec-title">Machine Learning <span class="glow-cyan">In Depth</span></h2>
-                <p class="sec-sub">Understanding the algorithms, metrics, and methodologies that power our automated pipeline.</p>
+                <h2 class="sec-title">Supervised Learning <span class="glow-cyan">In Depth</span></h2>
+                <p class="sec-sub">Understanding the algorithms, metrics, and methodologies that power our automated supervised pipeline.</p>
+            </div>
+
+            <div class="learning-tabs" data-aos="fade-up">
+                <div class="learning-tab active" onclick="switchTab('supervised', this)"><i class="fas fa-chart-line"></i> Supervised</div>
+                <div class="learning-tab active-orange" onclick="window.location.href='#unsupervised'"><i class="fas fa-object-group"></i> Unsupervised</div>
             </div>
 
             <div class="row g-4 mb-5">
@@ -2081,7 +2425,7 @@
                             <span class="badge-model"><i class="fas fa-check"></i>KNN Regressor</span>
                         </div>
                         <div class="mt-4 p-3 rounded-3" style="background:rgba(0,240,255,0.04);border:1px solid rgba(0,240,255,0.1);">
-                            <small style="color:var(--text-dim);"><strong style="color:#fff;">Key Metrics:</strong> R&sup2; Score, MAE, RMSE, Adjusted R&sup2;</small>
+                            <small style="color:var(--text-dim);"><strong style="color:#fff;">Key Metrics:</strong> R² Score, MAE, RMSE, Adjusted R²</small>
                         </div>
                     </div>
                 </div>
@@ -2115,7 +2459,7 @@
                         <div class="row g-4">
                             <div class="col-md-4">
                                 <div class="metric-box">
-                                    <div class="m-val">R&sup2;</div>
+                                    <div class="m-val">R²</div>
                                     <div class="m-label">Coefficient of Determination</div>
                                     <p style="color:var(--text-dim);font-size:0.82rem;margin-top:8px;">Measures variance explained. Range: 0 to 1 (higher is better).</p>
                                 </div>
@@ -2153,6 +2497,894 @@
                                     <div class="m-val">CV</div>
                                     <div class="m-label">Cross-Validation Score</div>
                                     <p style="color:var(--text-dim);font-size:0.82rem;margin-top:8px;">K-Fold validation ensures generalization and prevents overfitting.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- UNSUPERVISED LEARNING - NEW SECTION -->
+    <section class="sec-pad" id="unsupervised" style="background:linear-gradient(180deg,transparent,rgba(255,107,53,0.03),transparent);">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <div class="sec-label sec-label-orange"><i class="fas fa-object-group"></i> Pattern Discovery</div>
+                <h2 class="sec-title">Unsupervised Learning <span class="glow-orange">Deep Dive</span></h2>
+                <p class="sec-sub">Discover hidden structures, natural groupings, and latent patterns in your data without labeled targets. Complete hyperparameter references for every algorithm.</p>
+            </div>
+
+            <!-- Learning Type Overview -->
+            <div class="row g-4 mb-5">
+                <div class="col-lg-4" data-aos="fade-up">
+                    <div class="glass intro-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
+                        <div class="ic-icon" style="background:linear-gradient(135deg,rgba(255,107,53,0.2),rgba(189,0,255,0.2));"><i class="fas fa-object-group" style="color:var(--orange);"></i></div>
+                        <h4>Clustering</h4>
+                        <p>Group similar data points together based on feature similarity. Essential for customer segmentation, anomaly detection, and image compression.</p>
+                        <div class="mt-3">
+                            <span class="tag tag-orange">K-Means</span>
+                            <span class="tag tag-orange">DBSCAN</span>
+                            <span class="tag tag-orange">Hierarchical</span>
+                            <span class="tag tag-orange">GMM</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass intro-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
+                        <div class="ic-icon" style="background:linear-gradient(135deg,rgba(189,0,255,0.2),rgba(0,240,255,0.2));"><i class="fas fa-compress-arrows-alt" style="color:var(--violet);"></i></div>
+                        <h4>Dimensionality Reduction</h4>
+                        <p>Reduce the number of features while preserving variance. Critical for visualization, noise reduction, and computational efficiency.</p>
+                        <div class="mt-3">
+                            <span class="tag tag-orange">PCA</span>
+                            <span class="tag tag-orange">t-SNE</span>
+                            <span class="tag tag-orange">UMAP</span>
+                            <span class="tag tag-orange">Autoencoders</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="glass intro-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
+                        <div class="ic-icon" style="background:linear-gradient(135deg,rgba(0,255,157,0.2),rgba(255,107,53,0.2));"><i class="fas fa-project-diagram" style="color:var(--emerald);"></i></div>
+                        <h4>Association Rules</h4>
+                        <p>Discover relationships between variables in large datasets. Widely used in market basket analysis and recommendation systems.</p>
+                        <div class="mt-3">
+                            <span class="tag tag-orange">Apriori</span>
+                            <span class="tag tag-orange">FP-Growth</span>
+                            <span class="tag tag-orange">Eclat</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CLUSTERING ALGORITHMS -->
+            <div class="text-center mb-4" data-aos="fade-up">
+                <div class="sec-label sec-label-orange"><i class="fas fa-object-group"></i> Clustering</div>
+                <h3 class="sec-title" style="font-size:2rem;">Clustering <span class="glow-orange">Algorithms</span></h3>
+            </div>
+
+            <div class="row g-4 mb-5">
+                <!-- K-Means -->
+                <div class="col-lg-6" data-aos="fade-up">
+                    <div class="glass unsupervised-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
+                        <h4>
+                            <div class="algo-icon" style="background:linear-gradient(135deg,rgba(255,107,53,0.2),rgba(255,107,53,0.1));"><i class="fas fa-bullseye" style="color:var(--orange);"></i></div>
+                            K-Means Clustering
+                        </h4>
+                        <p style="color:var(--text-dim);margin-bottom:16px;">Partitions data into <span class="hl-orange">K clusters</span> by minimizing within-cluster sum of squares. Fast and scalable for large datasets. Best with spherical, equally-sized clusters.</p>
+
+                        <div class="cluster-viz">
+                            <div class="cluster-dot" style="background:var(--cyan);top:30%;left:25%;animation-delay:0s;"></div>
+                            <div class="cluster-dot" style="background:var(--cyan);top:35%;left:30%;animation-delay:0.2s;"></div>
+                            <div class="cluster-dot" style="background:var(--cyan);top:28%;left:28%;animation-delay:0.4s;"></div>
+                            <div class="cluster-dot" style="background:var(--cyan);top:32%;left:22%;animation-delay:0.6s;"></div>
+                            <div class="cluster-dot" style="background:var(--magenta);top:60%;left:65%;animation-delay:0.1s;"></div>
+                            <div class="cluster-dot" style="background:var(--magenta);top:65%;left:70%;animation-delay:0.3s;"></div>
+                            <div class="cluster-dot" style="background:var(--magenta);top:58%;left:68%;animation-delay:0.5s;"></div>
+                            <div class="cluster-dot" style="background:var(--magenta);top:62%;left:72%;animation-delay:0.7s;"></div>
+                            <div class="cluster-dot" style="background:var(--violet);top:45%;left:45%;animation-delay:0.15s;"></div>
+                            <div class="cluster-dot" style="background:var(--violet);top:48%;left:50%;animation-delay:0.35s;"></div>
+                            <div class="cluster-dot" style="background:var(--violet);top:42%;left:48%;animation-delay:0.55s;"></div>
+                        </div>
+
+                        <table class="hp-table">
+                            <thead>
+                                <tr>
+                                    <th>Hyperparameter</th>
+                                    <th>Description</th>
+                                    <th>Typical Range</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>n_clusters</code></td>
+                                    <td>Number of clusters (K)</td>
+                                    <td>2 to 20 (Elbow method)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>init</code></td>
+                                    <td>Initialization method</td>
+                                    <td>k-means++, random</td>
+                                </tr>
+                                <tr>
+                                    <td><code>n_init</code></td>
+                                    <td>Number of initializations</td>
+                                    <td>10 to 50</td>
+                                </tr>
+                                <tr>
+                                    <td><code>max_iter</code></td>
+                                    <td>Maximum iterations</td>
+                                    <td>100 to 500</td>
+                                </tr>
+                                <tr>
+                                    <td><code>algorithm</code></td>
+                                    <td>K-means algorithm variant</td>
+                                    <td>lloyd, elkan</td>
+                                </tr>
+                                <tr>
+                                    <td><code>tol</code></td>
+                                    <td>Convergence tolerance</td>
+                                    <td>1e-4 to 1e-6</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="mt-3 p-3 rounded-3" style="background:rgba(255,107,53,0.04);border:1px solid rgba(255,107,53,0.1);">
+                            <small style="color:var(--text-dim);"><strong style="color:#fff;">Best For:</strong> Customer segmentation, document clustering, image compression. <strong style="color:#fff;">Metrics:</strong> Silhouette Score, Inertia, Davies-Bouldin Index</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DBSCAN -->
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass unsupervised-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
+                        <h4>
+                            <div class="algo-icon" style="background:linear-gradient(135deg,rgba(255,42,109,0.2),rgba(255,42,109,0.1));"><i class="fas fa-expand-arrows-alt" style="color:var(--magenta);"></i></div>
+                            DBSCAN
+                        </h4>
+                        <p style="color:var(--text-dim);margin-bottom:16px;">Density-Based Spatial Clustering discovers clusters of <span class="hl-orange">arbitrary shape</span> and identifies noise points. Does not require specifying cluster count.</p>
+
+                        <div class="cluster-viz">
+                            <div class="cluster-dot" style="background:var(--cyan);top:25%;left:20%;width:6px;height:6px;animation-delay:0s;"></div>
+                            <div class="cluster-dot" style="background:var(--cyan);top:28%;left:22%;width:6px;height:6px;animation-delay:0.1s;"></div>
+                            <div class="cluster-dot" style="background:var(--cyan);top:24%;left:24%;width:6px;height:6px;animation-delay:0.2s;"></div>
+                            <div class="cluster-dot" style="background:var(--cyan);top:30%;left:18%;width:6px;height:6px;animation-delay:0.3s;"></div>
+                            <div class="cluster-dot" style="background:var(--cyan);top:26%;left:26%;width:6px;height:6px;animation-delay:0.4s;"></div>
+                            <div class="cluster-dot" style="background:var(--magenta);top:55%;left:60%;width:6px;height:6px;animation-delay:0.15s;"></div>
+                            <div class="cluster-dot" style="background:var(--magenta);top:58%;left:63%;width:6px;height:6px;animation-delay:0.25s;"></div>
+                            <div class="cluster-dot" style="background:var(--magenta);top:52%;left:65%;width:6px;height:6px;animation-delay:0.35s;"></div>
+                            <div class="cluster-dot" style="background:var(--magenta);top:60%;left:58%;width:6px;height:6px;animation-delay:0.45s;"></div>
+                            <div class="cluster-dot" style="background:var(--text-faint);top:40%;left:80%;width:4px;height:4px;animation-delay:0.5s;"></div>
+                            <div class="cluster-dot" style="background:var(--text-faint);top:70%;left:30%;width:4px;height:4px;animation-delay:0.6s;"></div>
+                            <div class="cluster-dot" style="background:var(--text-faint);top:15%;left:75%;width:4px;height:4px;animation-delay:0.7s;"></div>
+                        </div>
+
+                        <table class="hp-table">
+                            <thead>
+                                <tr>
+                                    <th>Hyperparameter</th>
+                                    <th>Description</th>
+                                    <th>Typical Range</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>eps</code></td>
+                                    <td>Maximum distance between neighbors</td>
+                                    <td>0.1 to 1.0 (k-distance graph)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>min_samples</code></td>
+                                    <td>Min points to form dense region</td>
+                                    <td>2 to 10 (2*dimensions)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>metric</code></td>
+                                    <td>Distance metric</td>
+                                    <td>euclidean, manhattan, cosine</td>
+                                </tr>
+                                <tr>
+                                    <td><code>algorithm</code></td>
+                                    <td>Nearest neighbors algorithm</td>
+                                    <td>auto, ball_tree, kd_tree</td>
+                                </tr>
+                                <tr>
+                                    <td><code>leaf_size</code></td>
+                                    <td>Leaf size for tree algorithms</td>
+                                    <td>20 to 50</td>
+                                </tr>
+                                <tr>
+                                    <td><code>p</code></td>
+                                    <td>Power parameter for Minkowski</td>
+                                    <td>1 (Manhattan) to 2 (Euclidean)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="mt-3 p-3 rounded-3" style="background:rgba(255,42,109,0.04);border:1px solid rgba(255,42,109,0.1);">
+                            <small style="color:var(--text-dim);"><strong style="color:#fff;">Best For:</strong> Anomaly detection, spatial data, non-spherical clusters. <strong style="color:#fff;">Metrics:</strong> Silhouette Score, Noise Ratio, Density Connectivity</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hierarchical Clustering -->
+                <div class="col-lg-6" data-aos="fade-up">
+                    <div class="glass unsupervised-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
+                        <h4>
+                            <div class="algo-icon" style="background:linear-gradient(135deg,rgba(0,255,157,0.2),rgba(0,255,157,0.1));"><i class="fas fa-sitemap" style="color:var(--emerald);"></i></div>
+                            Hierarchical Clustering
+                        </h4>
+                        <p style="color:var(--text-dim);margin-bottom:16px;">Builds a <span class="hl-orange">tree of clusters</span> (dendrogram) via agglomerative or divisive approaches. No need to specify K. Provides rich cluster hierarchy visualization.</p>
+
+                        <div class="dendro-viz">
+                            <div class="dendro-line" style="width:2px;height:40px;top:20px;left:20%;animation-delay:0s;"></div>
+                            <div class="dendro-line" style="width:2px;height:40px;top:20px;left:40%;animation-delay:0.1s;"></div>
+                            <div class="dendro-line" style="width:2px;height:30px;top:60px;left:30%;animation-delay:0.2s;"></div>
+                            <div class="dendro-line" style="width:20%;height:2px;top:60px;left:20%;animation-delay:0.3s;"></div>
+                            <div class="dendro-line" style="width:2px;height:40px;top:20px;left:65%;animation-delay:0.15s;"></div>
+                            <div class="dendro-line" style="width:2px;height:40px;top:20px;left:85%;animation-delay:0.25s;"></div>
+                            <div class="dendro-line" style="width:2px;height:30px;top:60px;left:75%;animation-delay:0.35s;"></div>
+                            <div class="dendro-line" style="width:20%;height:2px;top:60px;left:65%;animation-delay:0.45s;"></div>
+                            <div class="dendro-line" style="width:2px;height:40px;top:90px;left:55%;animation-delay:0.5s;"></div>
+                            <div class="dendro-line" style="width:55%;height:2px;top:90px;left:30%;animation-delay:0.6s;"></div>
+                        </div>
+
+                        <table class="hp-table">
+                            <thead>
+                                <tr>
+                                    <th>Hyperparameter</th>
+                                    <th>Description</th>
+                                    <th>Typical Range</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>n_clusters</code></td>
+                                    <td>Number of clusters to extract</td>
+                                    <td>2 to 10 (from dendrogram)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>linkage</code></td>
+                                    <td>Linkage criterion</td>
+                                    <td>ward, complete, average, single</td>
+                                </tr>
+                                <tr>
+                                    <td><code>metric</code></td>
+                                    <td>Distance metric</td>
+                                    <td>euclidean, manhattan, cosine</td>
+                                </tr>
+                                <tr>
+                                    <td><code>affinity</code></td>
+                                    <td>Distance computation method</td>
+                                    <td>euclidean, l1, l2, manhattan</td>
+                                </tr>
+                                <tr>
+                                    <td><code>compute_full_tree</code></td>
+                                    <td>Build full tree or stop early</td>
+                                    <td>auto, True, False</td>
+                                </tr>
+                                <tr>
+                                    <td><code>distance_threshold</code></td>
+                                    <td>Cut tree at this distance</td>
+                                    <td>0.5 to 2.0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="mt-3 p-3 rounded-3" style="background:rgba(0,255,157,0.04);border:1px solid rgba(0,255,157,0.1);">
+                            <small style="color:var(--text-dim);"><strong style="color:#fff;">Best For:</strong> Taxonomy creation, gene expression, social network analysis. <strong style="color:#fff;">Metrics:</strong> Cophenetic Correlation, Dendrogram Cut Height</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gaussian Mixture Models -->
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass unsupervised-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
+                        <h4>
+                            <div class="algo-icon" style="background:linear-gradient(135deg,rgba(189,0,255,0.2),rgba(189,0,255,0.1));"><i class="fas fa-circle-notch" style="color:var(--violet);"></i></div>
+                            Gaussian Mixture Models (GMM)
+                        </h4>
+                        <p style="color:var(--text-dim);margin-bottom:16px;">Probabilistic model assuming data from <span class="hl-orange">mixture of Gaussian distributions</span>. Provides soft cluster assignments (probability scores) and handles overlapping clusters.</p>
+
+                        <div class="cluster-viz">
+                            <div class="cluster-dot" style="background:rgba(0,240,255,0.6);top:30%;left:30%;width:10px;height:10px;animation-delay:0s;"></div>
+                            <div class="cluster-dot" style="background:rgba(0,240,255,0.6);top:32%;left:28%;width:10px;height:10px;animation-delay:0.1s;"></div>
+                            <div class="cluster-dot" style="background:rgba(0,240,255,0.6);top:28%;left:32%;width:10px;height:10px;animation-delay:0.2s;"></div>
+                            <div class="cluster-dot" style="background:rgba(255,42,109,0.6);top:55%;left:60%;width:10px;height:10px;animation-delay:0.15s;"></div>
+                            <div class="cluster-dot" style="background:rgba(255,42,109,0.6);top:58%;left:58%;width:10px;height:10px;animation-delay:0.25s;"></div>
+                            <div class="cluster-dot" style="background:rgba(255,42,109,0.6);top:52%;left:62%;width:10px;height:10px;animation-delay:0.35s;"></div>
+                            <div style="position:absolute;top:30%;left:30%;width:40px;height:40px;border:2px solid rgba(0,240,255,0.3);border-radius:50%;animation:clusterFloat 4s ease-in-out infinite;"></div>
+                            <div style="position:absolute;top:52%;left:56%;width:40px;height:40px;border:2px solid rgba(255,42,109,0.3);border-radius:50%;animation:clusterFloat 4s ease-in-out infinite 1s;"></div>
+                        </div>
+
+                        <table class="hp-table">
+                            <thead>
+                                <tr>
+                                    <th>Hyperparameter</th>
+                                    <th>Description</th>
+                                    <th>Typical Range</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>n_components</code></td>
+                                    <td>Number of mixture components</td>
+                                    <td>2 to 20 (BIC/AIC selection)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>covariance_type</code></td>
+                                    <td>Covariance structure type</td>
+                                    <td>full, tied, diag, spherical</td>
+                                </tr>
+                                <tr>
+                                    <td><code>max_iter</code></td>
+                                    <td>Maximum EM iterations</td>
+                                    <td>100 to 500</td>
+                                </tr>
+                                <tr>
+                                    <td><code>tol</code></td>
+                                    <td>Convergence threshold</td>
+                                    <td>1e-3 to 1e-5</td>
+                                </tr>
+                                <tr>
+                                    <td><code>init_params</code></td>
+                                    <td>Parameter initialization</td>
+                                    <td>kmeans, random</td>
+                                </tr>
+                                <tr>
+                                    <td><code>reg_covar</code></td>
+                                    <td>Covariance regularization</td>
+                                    <td>1e-6 to 1e-4</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="mt-3 p-3 rounded-3" style="background:rgba(189,0,255,0.04);border:1px solid rgba(189,0,255,0.1);">
+                            <small style="color:var(--text-dim);"><strong style="color:#fff;">Best For:</strong> Density estimation, soft clustering, anomaly detection. <strong style="color:#fff;">Metrics:</strong> BIC, AIC, Log-Likelihood, Silhouette Score</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIMENSIONALITY REDUCTION -->
+            <div class="text-center mb-4" data-aos="fade-up">
+                <div class="sec-label sec-label-orange"><i class="fas fa-compress-arrows-alt"></i> Dimensionality Reduction</div>
+                <h3 class="sec-title" style="font-size:2rem;">Dimensionality <span class="glow-orange">Reduction</span></h3>
+            </div>
+
+            <div class="row g-4 mb-5">
+                <!-- PCA -->
+                <div class="col-lg-6" data-aos="fade-up">
+                    <div class="glass unsupervised-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
+                        <h4>
+                            <div class="algo-icon" style="background:linear-gradient(135deg,rgba(0,240,255,0.2),rgba(0,240,255,0.1));"><i class="fas fa-compress" style="color:var(--cyan);"></i></div>
+                            Principal Component Analysis (PCA)
+                        </h4>
+                        <p style="color:var(--text-dim);margin-bottom:16px;">Linear transformation to <span class="hl-orange">maximize variance</span> along orthogonal axes. The most widely used technique for feature extraction, noise reduction, and visualization.</p>
+
+                        <div class="dim-red-viz">
+                            <div class="dim-axis x"></div>
+                            <div class="dim-axis y"></div>
+                            <div class="dim-point" style="background:var(--cyan);top:35%;left:35%;animation-delay:0s;"></div>
+                            <div class="dim-point" style="background:var(--cyan);top:38%;left:40%;animation-delay:0.1s;"></div>
+                            <div class="dim-point" style="background:var(--cyan);top:32%;left:38%;animation-delay:0.2s;"></div>
+                            <div class="dim-point" style="background:var(--cyan);top:36%;left:42%;animation-delay:0.3s;"></div>
+                            <div class="dim-point" style="background:var(--magenta);top:55%;left:60%;animation-delay:0.15s;"></div>
+                            <div class="dim-point" style="background:var(--magenta);top:58%;left:65%;animation-delay:0.25s;"></div>
+                            <div class="dim-point" style="background:var(--magenta);top:52%;left:63%;animation-delay:0.35s;"></div>
+                            <div class="dim-point" style="background:var(--magenta);top:56%;left:58%;animation-delay:0.45s;"></div>
+                            <div style="position:absolute;top:30%;left:30%;width:60%;height:2px;background:linear-gradient(90deg,var(--cyan),var(--magenta));transform:rotate(25deg);opacity:0.4;"></div>
+                            <div style="position:absolute;top:50%;left:25%;width:60%;height:2px;background:linear-gradient(90deg,var(--magenta),var(--cyan));transform:rotate(-65deg);opacity:0.4;"></div>
+                        </div>
+
+                        <table class="hp-table">
+                            <thead>
+                                <tr>
+                                    <th>Hyperparameter</th>
+                                    <th>Description</th>
+                                    <th>Typical Range</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>n_components</code></td>
+                                    <td>Number of components</td>
+                                    <td>2 to 50 (variance threshold)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>svd_solver</code></td>
+                                    <td>SVD computation method</td>
+                                    <td>auto, full, arpack, randomized</td>
+                                </tr>
+                                <tr>
+                                    <td><code>whiten</code></td>
+                                    <td>Decorrelate components</td>
+                                    <td>True, False</td>
+                                </tr>
+                                <tr>
+                                    <td><code>tol</code></td>
+                                    <td>Tolerance for arpack solver</td>
+                                    <td>0 to 0.1</td>
+                                </tr>
+                                <tr>
+                                    <td><code>iterated_power</code></td>
+                                    <td>Power iterations for randomized</td>
+                                    <td>2 to 10</td>
+                                </tr>
+                                <tr>
+                                    <td><code>random_state</code></td>
+                                    <td>Reproducibility seed</td>
+                                    <td>0 to 42</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="mt-3 p-3 rounded-3" style="background:rgba(0,240,255,0.04);border:1px solid rgba(0,240,255,0.1);">
+                            <small style="color:var(--text-dim);"><strong style="color:#fff;">Best For:</strong> Feature extraction, noise filtering, visualization. <strong style="color:#fff;">Metrics:</strong> Explained Variance Ratio, Reconstruction Error</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- t-SNE -->
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass unsupervised-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
+                        <h4>
+                            <div class="algo-icon" style="background:linear-gradient(135deg,rgba(255,42,109,0.2),rgba(255,42,109,0.1));"><i class="fas fa-eye" style="color:var(--magenta);"></i></div>
+                            t-SNE (t-Distributed Stochastic Neighbor Embedding)
+                        </h4>
+                        <p style="color:var(--text-dim);margin-bottom:16px;">Non-linear technique preserving <span class="hl-orange">local neighborhood structure</span>. Excellent for visualizing high-dimensional data in 2D/3D. Computationally intensive but visually stunning.</p>
+
+                        <div class="dim-red-viz" style="border-color:rgba(255,42,109,0.15);">
+                            <div class="dim-axis x" style="background:rgba(255,42,109,0.3);"></div>
+                            <div class="dim-axis y" style="background:rgba(255,42,109,0.3);"></div>
+                            <div class="dim-point" style="background:var(--cyan);top:25%;left:25%;width:8px;height:8px;animation-delay:0s;"></div>
+                            <div class="dim-point" style="background:var(--cyan);top:28%;left:22%;width:8px;height:8px;animation-delay:0.05s;"></div>
+                            <div class="dim-point" style="background:var(--cyan);top:22%;left:28%;width:8px;height:8px;animation-delay:0.1s;"></div>
+                            <div class="dim-point" style="background:var(--cyan);top:26%;left:26%;width:8px;height:8px;animation-delay:0.15s;"></div>
+                            <div class="dim-point" style="background:var(--magenta);top:60%;left:65%;width:8px;height:8px;animation-delay:0.2s;"></div>
+                            <div class="dim-point" style="background:var(--magenta);top:63%;left:62%;width:8px;height:8px;animation-delay:0.25s;"></div>
+                            <div class="dim-point" style="background:var(--magenta);top:58%;left:68%;width:8px;height:8px;animation-delay:0.3s;"></div>
+                            <div class="dim-point" style="background:var(--magenta);top:61%;left:66%;width:8px;height:8px;animation-delay:0.35s;"></div>
+                            <div class="dim-point" style="background:var(--violet);top:40%;left:50%;width:8px;height:8px;animation-delay:0.4s;"></div>
+                            <div class="dim-point" style="background:var(--violet);top:43%;left:48%;width:8px;height:8px;animation-delay:0.45s;"></div>
+                            <div class="dim-point" style="background:var(--violet);top:38%;left:52%;width:8px;height:8px;animation-delay:0.5s;"></div>
+                        </div>
+
+                        <table class="hp-table">
+                            <thead>
+                                <tr>
+                                    <th>Hyperparameter</th>
+                                    <th>Description</th>
+                                    <th>Typical Range</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>n_components</code></td>
+                                    <td>Output dimensions</td>
+                                    <td>2 or 3 (visualization)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>perplexity</code></td>
+                                    <td>Effective number of neighbors</td>
+                                    <td>5 to 50 (sqrt(n_samples))</td>
+                                </tr>
+                                <tr>
+                                    <td><code>learning_rate</code></td>
+                                    <td>Step size for optimization</td>
+                                    <td>10 to 1000 (n/12)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>n_iter</code></td>
+                                    <td>Optimization iterations</td>
+                                    <td>250 to 1000</td>
+                                </tr>
+                                <tr>
+                                    <td><code>metric</code></td>
+                                    <td>Distance metric</td>
+                                    <td>euclidean, cosine, manhattan</td>
+                                </tr>
+                                <tr>
+                                    <td><code>init</code></td>
+                                    <td>Initialization method</td>
+                                    <td>random, pca</td>
+                                </tr>
+                                <tr>
+                                    <td><code>early_exaggeration</code></td>
+                                    <td>Space between clusters</td>
+                                    <td>4 to 30</td>
+                                </tr>
+                                <tr>
+                                    <td><code>method</code></td>
+                                    <td>Gradient computation</td>
+                                    <td>barnes_hut, exact</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="mt-3 p-3 rounded-3" style="background:rgba(255,42,109,0.04);border:1px solid rgba(255,42,109,0.1);">
+                            <small style="color:var(--text-dim);"><strong style="color:#fff;">Best For:</strong> Data visualization, cluster validation, exploratory analysis. <strong style="color:#fff;">Metrics:</strong> KL Divergence, Trustworthiness, Continuity</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- UMAP -->
+                <div class="col-lg-6" data-aos="fade-up">
+                    <div class="glass unsupervised-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
+                        <h4>
+                            <div class="algo-icon" style="background:linear-gradient(135deg,rgba(0,255,157,0.2),rgba(0,255,157,0.1));"><i class="fas fa-map" style="color:var(--emerald);"></i></div>
+                            UMAP (Uniform Manifold Approximation)
+                        </h4>
+                        <p style="color:var(--text-dim);margin-bottom:16px;">Modern non-linear technique preserving <span class="hl-orange">both local and global structure</span>. Faster than t-SNE and better at preserving global topology. Ideal for large datasets.</p>
+
+                        <div class="dim-red-viz" style="border-color:rgba(0,255,157,0.15);">
+                            <div class="dim-axis x" style="background:rgba(0,255,157,0.3);"></div>
+                            <div class="dim-axis y" style="background:rgba(0,255,157,0.3);"></div>
+                            <div class="dim-point" style="background:var(--cyan);top:20%;left:20%;width:7px;height:7px;animation-delay:0s;"></div>
+                            <div class="dim-point" style="background:var(--cyan);top:22%;left:18%;width:7px;height:7px;animation-delay:0.08s;"></div>
+                            <div class="dim-point" style="background:var(--cyan);top:18%;left:22%;width:7px;height:7px;animation-delay:0.16s;"></div>
+                            <div class="dim-point" style="background:var(--cyan);top:21%;left:21%;width:7px;height:7px;animation-delay:0.24s;"></div>
+                            <div class="dim-point" style="background:var(--magenta);top:65%;left:70%;width:7px;height:7px;animation-delay:0.12s;"></div>
+                            <div class="dim-point" style="background:var(--magenta);top:68%;left:68%;width:7px;height:7px;animation-delay:0.2s;"></div>
+                            <div class="dim-point" style="background:var(--magenta);top:63%;left:72%;width:7px;height:7px;animation-delay:0.28s;"></div>
+                            <div class="dim-point" style="background:var(--magenta);top:66%;left:69%;width:7px;height:7px;animation-delay:0.36s;"></div>
+                            <div class="dim-point" style="background:var(--gold);top:45%;left:45%;width:7px;height:7px;animation-delay:0.32s;"></div>
+                            <div class="dim-point" style="background:var(--gold);top:48%;left:43%;width:7px;height:7px;animation-delay:0.4s;"></div>
+                            <div class="dim-point" style="background:var(--gold);top:43%;left:47%;width:7px;height:7px;animation-delay:0.48s;"></div>
+                        </div>
+
+                        <table class="hp-table">
+                            <thead>
+                                <tr>
+                                    <th>Hyperparameter</th>
+                                    <th>Description</th>
+                                    <th>Typical Range</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>n_neighbors</code></td>
+                                    <td>Local neighborhood size</td>
+                                    <td>2 to 200 (5-50 typical)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>min_dist</code></td>
+                                    <td>Minimum distance between points</td>
+                                    <td>0.0 to 0.99 (0.1 typical)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>n_components</code></td>
+                                    <td>Output dimensions</td>
+                                    <td>2 to 100</td>
+                                </tr>
+                                <tr>
+                                    <td><code>metric</code></td>
+                                    <td>Distance metric</td>
+                                    <td>euclidean, cosine, manhattan</td>
+                                </tr>
+                                <tr>
+                                    <td><code>learning_rate</code></td>
+                                    <td>Optimization learning rate</td>
+                                    <td>0.1 to 10</td>
+                                </tr>
+                                <tr>
+                                    <td><code>init</code></td>
+                                    <td>Initialization</td>
+                                    <td>spectral, random, pca</td>
+                                </tr>
+                                <tr>
+                                    <td><code>spread</code></td>
+                                    <td>Effective scale of embedded points</td>
+                                    <td>0.5 to 5.0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="mt-3 p-3 rounded-3" style="background:rgba(0,255,157,0.04);border:1px solid rgba(0,255,157,0.1);">
+                            <small style="color:var(--text-dim);"><strong style="color:#fff;">Best For:</strong> Large-scale visualization, single-cell genomics, NLP embeddings. <strong style="color:#fff;">Metrics:</strong> Trustworthiness, Shepard Diagram</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Autoencoders -->
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass unsupervised-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
+                        <h4>
+                            <div class="algo-icon" style="background:linear-gradient(135deg,rgba(255,215,0,0.2),rgba(255,215,0,0.1));"><i class="fas fa-network-wired" style="color:var(--gold);"></i></div>
+                            Autoencoders
+                        </h4>
+                        <p style="color:var(--text-dim);margin-bottom:16px;">Neural networks learning <span class="hl-orange">compressed representations</span> via encoder-decoder architecture. Powerful for denoising, anomaly detection, and generative modeling.</p>
+
+                        <div style="width:100%;height:200px;border-radius:16px;background:rgba(255,255,255,0.02);border:1px dashed rgba(255,215,0,0.15);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;margin-bottom:20px;">
+                            <div style="display:flex;align-items:center;gap:20px;">
+                                <div style="width:60px;height:80px;border:2px solid rgba(255,215,0,0.3);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;">
+                                    <div style="width:30px;height:6px;background:var(--gold);border-radius:3px;"></div>
+                                    <div style="width:30px;height:6px;background:var(--gold);border-radius:3px;"></div>
+                                    <div style="width:30px;height:6px;background:var(--gold);border-radius:3px;"></div>
+                                    <div style="width:30px;height:6px;background:var(--gold);border-radius:3px;"></div>
+                                    <div style="width:30px;height:6px;background:var(--gold);border-radius:3px;"></div>
+                                </div>
+                                <div style="font-size:1.5rem;color:var(--gold);"><i class="fas fa-arrow-right"></i></div>
+                                <div style="width:30px;height:30px;border:2px solid rgba(255,107,53,0.5);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                                    <div style="width:10px;height:10px;background:var(--orange);border-radius:50%;"></div>
+                                </div>
+                                <div style="font-size:1.5rem;color:var(--gold);"><i class="fas fa-arrow-right"></i></div>
+                                <div style="width:60px;height:80px;border:2px solid rgba(255,215,0,0.3);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;">
+                                    <div style="width:30px;height:6px;background:var(--gold);border-radius:3px;"></div>
+                                    <div style="width:30px;height:6px;background:var(--gold);border-radius:3px;"></div>
+                                    <div style="width:30px;height:6px;background:var(--gold);border-radius:3px;"></div>
+                                    <div style="width:30px;height:6px;background:var(--gold);border-radius:3px;"></div>
+                                    <div style="width:30px;height:6px;background:var(--gold);border-radius:3px;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <table class="hp-table">
+                            <thead>
+                                <tr>
+                                    <th>Hyperparameter</th>
+                                    <th>Description</th>
+                                    <th>Typical Range</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>encoding_dim</code></td>
+                                    <td>Bottleneck layer size</td>
+                                    <td>2 to 128 (input/2 to input/10)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>hidden_layers</code></td>
+                                    <td>Encoder/decoder depth</td>
+                                    <td>2 to 5 layers</td>
+                                </tr>
+                                <tr>
+                                    <td><code>activation</code></td>
+                                    <td>Activation function</td>
+                                    <td>relu, tanh, sigmoid</td>
+                                </tr>
+                                <tr>
+                                    <td><code>loss</code></td>
+                                    <td>Reconstruction loss</td>
+                                    <td>mse, binary_crossentropy</td>
+                                </tr>
+                                <tr>
+                                    <td><code>optimizer</code></td>
+                                    <td>Optimization algorithm</td>
+                                    <td>adam, rmsprop, sgd</td>
+                                </tr>
+                                <tr>
+                                    <td><code>learning_rate</code></td>
+                                    <td>Training step size</td>
+                                    <td>1e-4 to 1e-2</td>
+                                </tr>
+                                <tr>
+                                    <td><code>batch_size</code></td>
+                                    <td>Mini-batch size</td>
+                                    <td>16 to 256</td>
+                                </tr>
+                                <tr>
+                                    <td><code>epochs</code></td>
+                                    <td>Training epochs</td>
+                                    <td>50 to 500</td>
+                                </tr>
+                                <tr>
+                                    <td><code>dropout</code></td>
+                                    <td>Regularization rate</td>
+                                    <td>0.0 to 0.5</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="mt-3 p-3 rounded-3" style="background:rgba(255,215,0,0.04);border:1px solid rgba(255,215,0,0.1);">
+                            <small style="color:var(--text-dim);"><strong style="color:#fff;">Best For:</strong> Anomaly detection, denoising, feature learning. <strong style="color:#fff;">Metrics:</strong> Reconstruction Error, MSE, KL Divergence</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ASSOCIATION RULES -->
+            <div class="text-center mb-4" data-aos="fade-up">
+                <div class="sec-label sec-label-orange"><i class="fas fa-project-diagram"></i> Association Mining</div>
+                <h3 class="sec-title" style="font-size:2rem;">Association <span class="glow-orange">Rule Mining</span></h3>
+            </div>
+
+            <div class="row g-4 mb-5">
+                <!-- Apriori -->
+                <div class="col-lg-6" data-aos="fade-up">
+                    <div class="glass unsupervised-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
+                        <h4>
+                            <div class="algo-icon" style="background:linear-gradient(135deg,rgba(0,240,255,0.2),rgba(0,240,255,0.1));"><i class="fas fa-shopping-basket" style="color:var(--cyan);"></i></div>
+                            Apriori Algorithm
+                        </h4>
+                        <p style="color:var(--text-dim);margin-bottom:16px;">Classic algorithm for finding <span class="hl-orange">frequent itemsets</span> and generating association rules. Uses a breadth-first search strategy with candidate generation and pruning.</p>
+
+                        <div class="association-viz">
+                            <div class="assoc-node" style="background:var(--cyan);top:20%;left:20%;animation-delay:0s;">A</div>
+                            <div class="assoc-node" style="background:var(--magenta);top:20%;left:60%;animation-delay:0.2s;">B</div>
+                            <div class="assoc-node" style="background:var(--violet);top:60%;left:40%;animation-delay:0.4s;">C</div>
+                            <div class="assoc-line" style="width:35%;top:28%;left:25%;transform:rotate(5deg);animation-delay:0.1s;"></div>
+                            <div class="assoc-line" style="width:25%;top:45%;left:30%;transform:rotate(55deg);animation-delay:0.3s;"></div>
+                            <div class="assoc-line" style="width:25%;top:45%;left:50%;transform:rotate(-55deg);animation-delay:0.5s;"></div>
+                            <div style="position:absolute;bottom:15%;left:50%;transform:translateX(-50%);font-size:0.75rem;color:var(--text-dim);">A,B → C (support: 0.6, confidence: 0.8)</div>
+                        </div>
+
+                        <table class="hp-table">
+                            <thead>
+                                <tr>
+                                    <th>Hyperparameter</th>
+                                    <th>Description</th>
+                                    <th>Typical Range</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>min_support</code></td>
+                                    <td>Minimum support threshold</td>
+                                    <td>0.01 to 0.5 (0.1 typical)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>min_confidence</code></td>
+                                    <td>Minimum confidence threshold</td>
+                                    <td>0.5 to 0.9 (0.7 typical)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>min_lift</code></td>
+                                    <td>Minimum lift threshold</td>
+                                    <td>1.0 to 5.0 (1.5 typical)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>min_length</code></td>
+                                    <td>Minimum rule length</td>
+                                    <td>2 to 5</td>
+                                </tr>
+                                <tr>
+                                    <td><code>max_length</code></td>
+                                    <td>Maximum rule length</td>
+                                    <td>5 to 20</td>
+                                </tr>
+                                <tr>
+                                    <td><code>use_colnames</code></td>
+                                    <td>Use column names vs indices</td>
+                                    <td>True, False</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="mt-3 p-3 rounded-3" style="background:rgba(0,240,255,0.04);border:1px solid rgba(0,240,255,0.1);">
+                            <small style="color:var(--text-dim);"><strong style="color:#fff;">Best For:</strong> Market basket analysis, recommendation systems, cross-selling. <strong style="color:#fff;">Metrics:</strong> Support, Confidence, Lift, Conviction</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FP-Growth -->
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass unsupervised-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
+                        <h4>
+                            <div class="algo-icon" style="background:linear-gradient(135deg,rgba(0,255,157,0.2),rgba(0,255,157,0.1));"><i class="fas fa-tree" style="color:var(--emerald);"></i></div>
+                            FP-Growth (Frequent Pattern Growth)
+                        </h4>
+                        <p style="color:var(--text-dim);margin-bottom:16px;">Efficient algorithm using an <span class="hl-orange">FP-Tree data structure</span> to avoid candidate generation. Much faster than Apriori for large datasets with low minimum support.</p>
+
+                        <div class="association-viz">
+                            <div style="position:absolute;top:15%;left:50%;transform:translateX(-50%);width:40px;height:40px;border-radius:50%;background:var(--emerald);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;color:#fff;animation:assocPulse 2.5s ease infinite;">Root</div>
+                            <div style="position:absolute;top:35%;left:25%;width:30px;height:30px;border-radius:50%;background:rgba(0,240,255,0.6);display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;color:#fff;animation:assocPulse 2.5s ease infinite 0.2s;">A</div>
+                            <div style="position:absolute;top:35%;left:55%;width:30px;height:30px;border-radius:50%;background:rgba(255,42,109,0.6);display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;color:#fff;animation:assocPulse 2.5s ease infinite 0.4s;">B</div>
+                            <div style="position:absolute;top:35%;left:75%;width:30px;height:30px;border-radius:50%;background:rgba(189,0,255,0.6);display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;color:#fff;animation:assocPulse 2.5s ease infinite 0.6s;">C</div>
+                            <div style="position:absolute;top:60%;left:20%;width:25px;height:25px;border-radius:50%;background:rgba(0,240,255,0.4);display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:#fff;animation:assocPulse 2.5s ease infinite 0.3s;">A,C</div>
+                            <div style="position:absolute;top:60%;left:40%;width:25px;height:25px;border-radius:50%;background:rgba(255,42,109,0.4);display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:#fff;animation:assocPulse 2.5s ease infinite 0.5s;">B,C</div>
+                            <div style="position:absolute;top:60%;left:60%;width:25px;height:25px;border-radius:50%;background:rgba(189,0,255,0.4);display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:#fff;animation:assocPulse 2.5s ease infinite 0.7s;">A,B</div>
+                            <div style="position:absolute;top:60%;left:80%;width:25px;height:25px;border-radius:50%;background:rgba(255,215,0,0.4);display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:#fff;animation:assocPulse 2.5s ease infinite 0.9s;">A,B,C</div>
+                            <div class="assoc-line" style="width:20%;top:28%;left:35%;transform:rotate(35deg);animation-delay:0.1s;"></div>
+                            <div class="assoc-line" style="width:15%;top:28%;left:50%;transform:rotate(-10deg);animation-delay:0.3s;"></div>
+                            <div class="assoc-line" style="width:15%;top:28%;left:58%;transform:rotate(25deg);animation-delay:0.5s;"></div>
+                        </div>
+
+                        <table class="hp-table">
+                            <thead>
+                                <tr>
+                                    <th>Hyperparameter</th>
+                                    <th>Description</th>
+                                    <th>Typical Range</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>min_support</code></td>
+                                    <td>Minimum support threshold</td>
+                                    <td>0.01 to 0.5 (0.1 typical)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>use_colnames</code></td>
+                                    <td>Use column names</td>
+                                    <td>True, False</td>
+                                </tr>
+                                <tr>
+                                    <td><code>max_len</code></td>
+                                    <td>Maximum itemset length</td>
+                                    <td>None or 2 to 20</td>
+                                </tr>
+                                <tr>
+                                    <td><code>low_memory</code></td>
+                                    <td>Memory-efficient mode</td>
+                                    <td>True, False</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="mt-3 p-3 rounded-3" style="background:rgba(0,255,157,0.04);border:1px solid rgba(0,255,157,0.1);">
+                            <small style="color:var(--text-dim);"><strong style="color:#fff;">Best For:</strong> Large transaction datasets, web log mining, bioinformatics. <strong style="color:#fff;">Metrics:</strong> Support, Confidence, Lift, Leverage</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Unsupervised Evaluation Metrics -->
+            <div class="row g-4">
+                <div class="col-12" data-aos="fade-up">
+                    <div class="glass p-5">
+                        <h4 class="text-center mb-4" style="font-family:'Space Grotesk';font-weight:700;"><i class="fas fa-ruler-combined" style="color:var(--orange);margin-right:10px;"></i>Unsupervised Learning Evaluation Metrics</h4>
+                        <div class="row g-4">
+                            <div class="col-md-4">
+                                <div class="metric-box">
+                                    <div class="m-val" style="background:var(--grad-orange-violet);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Silhouette</div>
+                                    <div class="m-label">Silhouette Coefficient</div>
+                                    <p style="color:var(--text-dim);font-size:0.82rem;margin-top:8px;">Range: -1 to 1. Measures how similar an object is to its own cluster vs others. Higher is better.</p>
+                                    <div class="silhouette-bar">
+                                        <div class="silhouette-fill" style="width:78%;"></div>
+                                    </div>
+                                    <small style="color:var(--orange);font-size:0.75rem;">Score: 0.78 (Good)</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="metric-box">
+                                    <div class="m-val" style="background:var(--grad-orange-violet);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Inertia</div>
+                                    <div class="m-label">Within-Cluster Sum of Squares</div>
+                                    <p style="color:var(--text-dim);font-size:0.82rem;margin-top:8px;">Sum of squared distances to cluster centers. Lower is better. Used in Elbow Method.</p>
+                                    <div class="elbow-curve">
+                                        <div class="elbow-line"></div>
+                                        <div class="elbow-point" style="left:15%;bottom:70%;animation-delay:0s;"></div>
+                                        <div class="elbow-point" style="left:30%;bottom:55%;animation-delay:0.1s;"></div>
+                                        <div class="elbow-point" style="left:45%;bottom:42%;animation-delay:0.2s;"></div>
+                                        <div class="elbow-point" style="left:60%;bottom:35%;animation-delay:0.3s;"></div>
+                                        <div class="elbow-point" style="left:75%;bottom:32%;animation-delay:0.4s;"></div>
+                                        <div class="elbow-point" style="left:90%;bottom:30%;animation-delay:0.5s;"></div>
+                                    </div>
+                                    <small style="color:var(--orange);font-size:0.75rem;">Elbow at K=4</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="metric-box">
+                                    <div class="m-val" style="background:var(--grad-orange-violet);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">DBI</div>
+                                    <div class="m-label">Davies-Bouldin Index</div>
+                                    <p style="color:var(--text-dim);font-size:0.82rem;margin-top:8px;">Average similarity ratio of each cluster with its most similar cluster. Lower is better.</p>
+                                    <div class="silhouette-bar">
+                                        <div class="silhouette-fill" style="width:35%;"></div>
+                                    </div>
+                                    <small style="color:var(--orange);font-size:0.75rem;">Score: 0.35 (Excellent)</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="metric-box">
+                                    <div class="m-val" style="background:var(--grad-orange-violet);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">CHI</div>
+                                    <div class="m-label">Calinski-Harabasz Index</div>
+                                    <p style="color:var(--text-dim);font-size:0.82rem;margin-top:8px;">Ratio of between-cluster dispersion to within-cluster dispersion. Higher is better.</p>
+                                    <div class="silhouette-bar">
+                                        <div class="silhouette-fill" style="width:85%;"></div>
+                                    </div>
+                                    <small style="color:var(--orange);font-size:0.75rem;">Score: 285.4 (Excellent)</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="metric-box">
+                                    <div class="m-val" style="background:var(--grad-orange-violet);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">BIC</div>
+                                    <div class="m-label">Bayesian Information Criterion</div>
+                                    <p style="color:var(--text-dim);font-size:0.82rem;margin-top:8px;">Penalizes model complexity. Used to select optimal number of GMM components.</p>
+                                    <div class="silhouette-bar">
+                                        <div class="silhouette-fill" style="width:65%;"></div>
+                                    </div>
+                                    <small style="color:var(--orange);font-size:0.75rem;">Optimal K=5</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="metric-box">
+                                    <div class="m-val" style="background:var(--grad-orange-violet);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">ARI</div>
+                                    <div class="m-label">Adjusted Rand Index</div>
+                                    <p style="color:var(--text-dim);font-size:0.82rem;margin-top:8px;">Measures similarity between predicted and true clusters. Range: -1 to 1. Higher is better.</p>
+                                    <div class="silhouette-bar">
+                                        <div class="silhouette-fill" style="width:72%;"></div>
+                                    </div>
+                                    <small style="color:var(--orange);font-size:0.75rem;">Score: 0.72 (Good)</small>
                                 </div>
                             </div>
                         </div>
@@ -2229,14 +3461,14 @@
                 </div>
                 <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
                     <div class="glass ds-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
-                        <div class="ds-icon" style="background:linear-gradient(135deg,rgba(0,240,255,0.2),rgba(0,255,157,0.2));"><i class="fas fa-eye" style="color:var(--cyan);"></i></div>
-                        <h5>Visualization Importance</h5>
-                        <p><span class="hl">Data visualization</span> is discovery. Charts reveal hidden patterns, correlations, and distributions statistics alone cannot convey.</p>
+                        <div class="ds-icon" style="background:linear-gradient(135deg,rgba(255,107,53,0.2),rgba(255,107,53,0.1));"><i class="fas fa-object-group" style="color:var(--orange);"></i></div>
+                        <h5>Unsupervised Preprocessing</h5>
+                        <p>Prepare data for clustering and dimensionality reduction with <span class="hl-orange">feature normalization</span>, <span class="hl-orange">distance matrix computation</span>, and <span class="hl-orange">sparse matrix handling</span>.</p>
                         <ul>
-                            <li><i class="fas fa-chevron-right"></i>Distribution plots for normality</li>
-                            <li><i class="fas fa-chevron-right"></i>Correlation heatmaps</li>
-                            <li><i class="fas fa-chevron-right"></i>Box plots for outliers</li>
-                            <li><i class="fas fa-chevron-right"></i>Pair plots for relationships</li>
+                            <li><i class="fas fa-chevron-right"></i>Cosine similarity preprocessing</li>
+                            <li><i class="fas fa-chevron-right"></i>Dissimilarity matrix generation</li>
+                            <li><i class="fas fa-chevron-right"></i>Feature discretization for ARM</li>
+                            <li><i class="fas fa-chevron-right"></i>Sparse data optimization</li>
                         </ul>
                     </div>
                 </div>
@@ -2397,6 +3629,79 @@
                     </div>
                 </div>
             </div>
+
+            <!-- NEW: Unsupervised Visualizations Row -->
+            <div class="row g-4 mt-2">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                    <div class="glass viz-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
+                        <div class="viz-placeholder" style="border-color:rgba(255,107,53,0.15);">
+                            <div style="position:relative;width:100%;height:100%;">
+                                <div style="position:absolute;top:30%;left:30%;width:12px;height:12px;border-radius:50%;background:var(--cyan);animation:clusterFloat 3s ease-in-out infinite;"></div>
+                                <div style="position:absolute;top:35%;left:25%;width:10px;height:10px;border-radius:50%;background:var(--cyan);animation:clusterFloat 3s ease-in-out infinite 0.2s;"></div>
+                                <div style="position:absolute;top:28%;left:33%;width:10px;height:10px;border-radius:50%;background:var(--cyan);animation:clusterFloat 3s ease-in-out infinite 0.4s;"></div>
+                                <div style="position:absolute;top:60%;left:65%;width:12px;height:12px;border-radius:50%;background:var(--magenta);animation:clusterFloat 3s ease-in-out infinite 0.1s;"></div>
+                                <div style="position:absolute;top:65%;left:60%;width:10px;height:10px;border-radius:50%;background:var(--magenta);animation:clusterFloat 3s ease-in-out infinite 0.3s;"></div>
+                                <div style="position:absolute;top:58%;left:68%;width:10px;height:10px;border-radius:50%;background:var(--magenta);animation:clusterFloat 3s ease-in-out infinite 0.5s;"></div>
+                                <div style="position:absolute;top:45%;left:48%;width:12px;height:12px;border-radius:50%;background:var(--orange);animation:clusterFloat 3s ease-in-out infinite 0.15s;"></div>
+                                <div style="position:absolute;top:48%;left:52%;width:10px;height:10px;border-radius:50%;background:var(--orange);animation:clusterFloat 3s ease-in-out infinite 0.35s;"></div>
+                            </div>
+                        </div>
+                        <h5><i class="fas fa-object-group" style="color:var(--orange);margin-right:8px;"></i>Cluster Scatter</h5>
+                        <p style="color:var(--text-dim);font-size:0.85rem;">2D/3D scatter plots with color-coded cluster assignments and centroids.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass viz-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
+                        <div class="viz-placeholder" style="border-color:rgba(189,0,255,0.15);">
+                            <div style="position:relative;width:100%;height:100%;">
+                                <div style="position:absolute;top:10%;left:50%;width:2px;height:80%;background:rgba(189,0,255,0.2);transform:translateX(-50%);"></div>
+                                <div style="position:absolute;top:20%;left:40%;width:20%;height:2px;background:rgba(189,0,255,0.3);"></div>
+                                <div style="position:absolute;top:20%;left:40%;width:2px;height:15%;background:rgba(189,0,255,0.3);"></div>
+                                <div style="position:absolute;top:35%;left:30%;width:10%;height:2px;background:rgba(189,0,255,0.3);"></div>
+                                <div style="position:absolute;top:35%;left:30%;width:2px;height:10%;background:rgba(189,0,255,0.3);"></div>
+                                <div style="position:absolute;top:45%;left:25%;width:2px;height:8%;background:rgba(189,0,255,0.3);"></div>
+                                <div style="position:absolute;top:20%;left:60%;width:20%;height:2px;background:rgba(189,0,255,0.3);"></div>
+                                <div style="position:absolute;top:20%;left:60%;width:2px;height:15%;background:rgba(189,0,255,0.3);"></div>
+                                <div style="position:absolute;top:35%;left:70%;width:10%;height:2px;background:rgba(189,0,255,0.3);"></div>
+                                <div style="position:absolute;top:35%;left:70%;width:2px;height:10%;background:rgba(189,0,255,0.3);"></div>
+                                <div style="position:absolute;top:45%;left:75%;width:2px;height:8%;background:rgba(189,0,255,0.3);"></div>
+                            </div>
+                        </div>
+                        <h5><i class="fas fa-sitemap" style="color:var(--violet);margin-right:8px;"></i>Dendrogram</h5>
+                        <p style="color:var(--text-dim);font-size:0.85rem;">Hierarchical cluster tree with interactive cut levels and leaf labels.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="glass viz-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
+                        <div class="viz-placeholder" style="border-color:rgba(0,255,157,0.15);">
+                            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:8px;">
+                                <div style="display:flex;align-items:center;gap:8px;">
+                                    <div style="width:60px;height:8px;background:var(--cyan);border-radius:4px;"></div>
+                                    <span style="font-size:0.7rem;color:var(--text-dim);">PC1: 42%</span>
+                                </div>
+                                <div style="display:flex;align-items:center;gap:8px;">
+                                    <div style="width:40px;height:8px;background:var(--magenta);border-radius:4px;"></div>
+                                    <span style="font-size:0.7rem;color:var(--text-dim);">PC2: 28%</span>
+                                </div>
+                                <div style="display:flex;align-items:center;gap:8px;">
+                                    <div style="width:25px;height:8px;background:var(--violet);border-radius:4px;"></div>
+                                    <span style="font-size:0.7rem;color:var(--text-dim);">PC3: 15%</span>
+                                </div>
+                                <div style="display:flex;align-items:center;gap:8px;">
+                                    <div style="width:15px;height:8px;background:var(--orange);border-radius:4px;"></div>
+                                    <span style="font-size:0.7rem;color:var(--text-dim);">PC4: 8%</span>
+                                </div>
+                                <div style="display:flex;align-items:center;gap:8px;">
+                                    <div style="width:10px;height:8px;background:var(--text-faint);border-radius:4px;"></div>
+                                    <span style="font-size:0.7rem;color:var(--text-dim);">Other: 7%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <h5><i class="fas fa-chart-pie" style="color:var(--emerald);margin-right:8px;"></i>Explained Variance</h5>
+                        <p style="color:var(--text-dim);font-size:0.85rem;">Scree plots and cumulative variance charts for PCA component selection.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -2485,6 +3790,13 @@
                         <div class="t-icon" style="background:linear-gradient(135deg,rgba(103,58,183,0.2),rgba(156,39,176,0.2));"><i class="fas fa-cloud" style="color:#9c27b0;"></i></div>
                         <h5>AWS / GCP</h5>
                         <p>Cloud Deploy</p>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6" data-aos="fade-up" data-aos-delay="550">
+                    <div class="glass tech-card tilt-3d" onmousemove="tiltCard(this,event)" onmouseleave="resetTilt(this)">
+                        <div class="t-icon" style="background:linear-gradient(135deg,rgba(255,107,53,0.2),rgba(189,0,255,0.2));"><i class="fas fa-object-group" style="color:var(--orange);"></i></div>
+                        <h5>UMAP</h5>
+                        <p>Dim Reduction</p>
                     </div>
                 </div>
             </div>
@@ -2665,6 +3977,7 @@
                         <li><a href="#features">Features</a></li>
                         <li><a href="#how-it-works">How It Works</a></li>
                         <li><a href="#ml-details">ML Models</a></li>
+                        <li><a href="#unsupervised">Unsupervised</a></li>
                         <li><a href="#pricing">Pricing</a></li>
                         <li><a href="#changelog">Changelog</a></li>
                     </ul>
@@ -2906,6 +4219,12 @@
                     hmc.style.transform = '';
                 }
             });
+        }
+
+        // ===== TAB SWITCHING =====
+        function switchTab(type, el) {
+            document.querySelectorAll('.learning-tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
         }
     </script>
 </body>
